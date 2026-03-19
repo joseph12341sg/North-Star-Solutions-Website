@@ -28,6 +28,8 @@ import {
   Lock,
   Eye,
   Star,
+  Rocket,
+  Phone,
 } from 'lucide-react';
 
 function HomePage({ onNavigate }) {
@@ -86,34 +88,59 @@ function HomePage({ onNavigate }) {
   ];
 
   // ─── How-it-works steps ─────────────────────────────────────────────
+  const [activeStep, setActiveStep] = useState(0);
   const steps = [
     {
       number: '01',
       title: 'Discovery & Strategy',
       description:
         'We learn your ideal client, your specialisms, your capacity. We build a bespoke acquisition strategy around YOUR practice.',
-      icon: <Eye size={24} />,
+      icon: <Target size={24} />,
+      includes: [
+        'Deep-dive into your niche and ideal client avatar',
+        'Geographic and demographic targeting plan',
+        'Competitor landscape analysis',
+        'Custom campaign architecture blueprint',
+      ],
     },
     {
       number: '02',
       title: 'Campaign Build & Launch',
       description:
         'Our team builds your Meta Ads campaigns, landing pages, and lead capture systems. Compliant, professional, and proven to convert.',
-      icon: <Zap size={24} />,
+      icon: <Rocket size={24} />,
+      includes: [
+        'FCA-conscious ad copy and creative',
+        'High-converting landing page build',
+        'A/B testing framework setup',
+        'Tracking and attribution configured',
+      ],
     },
     {
       number: '03',
       title: 'Leads & Appointment Setting',
       description:
-        'Leads come in. Our trained appointment setters contact every lead within 60 seconds, qualify them, and book them directly into your calendar.',
-      icon: <Headphones size={24} />,
+        'Leads come in. Our trained setters contact every lead within 60 seconds, qualify them, and book them directly into your calendar.',
+      icon: <Phone size={24} />,
+      includes: [
+        'Sub-60-second lead response time',
+        'Financial services trained setters',
+        'Pre-qualification against your criteria',
+        'Direct calendar integration',
+      ],
     },
     {
       number: '04',
       title: 'Nurture & Show',
       description:
-        'Every booked prospect goes through our pre-meeting nurture sequence \u2014 emails, SMS, reminders \u2014 so they show up educated, warmed up, and ready to talk.',
+        'Every booked prospect goes through our pre-meeting nurture sequence \u2014 emails, SMS, reminders \u2014 so they show up ready to talk.',
       icon: <MessageSquare size={24} />,
+      includes: [
+        '5-touch pre-meeting email sequence',
+        'Strategic SMS reminders',
+        'Pre-meeting education content',
+        '93% average show rate',
+      ],
     },
   ];
 
@@ -211,9 +238,9 @@ function HomePage({ onNavigate }) {
     'Professional Adviser',
     'Citywire',
     'IFA Magazine',
-    'New Model Adviser',
-    'FT Wealth',
+    'Financial Reporter',
     'Adviser Lounge',
+    'New Model Adviser',
   ];
 
   // ─── Meta Ads Dashboard Component ──────────────────────────────────
@@ -454,12 +481,20 @@ function HomePage({ onNavigate }) {
         <p className="text-center text-ns-body text-sm md:text-base mb-8 tracking-wide uppercase">
           Trusted by financial advisors across the UK
         </p>
-        <div className="logo-scroll">
-          <div className="logo-scroll-track flex gap-8 items-center">
+        <div
+          className="marquee-container"
+          style={{
+            overflow: 'hidden',
+            maskImage: 'linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%)',
+          }}
+        >
+          <div className="marquee-track" style={{ display: 'flex', gap: '32px', alignItems: 'center', width: 'max-content' }}>
             {[...publications, ...publications].map((name, i) => (
               <div
                 key={i}
-                className="flex-shrink-0 bg-white/5 border border-white/10 rounded-lg px-6 py-3 min-w-[160px] text-center"
+                className="bg-white/5 border border-white/10 rounded-lg px-6 py-3 min-w-[160px] text-center"
+                style={{ flexShrink: 0 }}
               >
                 <span className="text-ns-body text-sm font-medium">{name}</span>
               </div>
@@ -534,7 +569,7 @@ function HomePage({ onNavigate }) {
       </Section>
 
       {/* ═══════════════════════════════════════════════════════════════
-          4. HOW IT WORKS
+          4. HOW IT WORKS — Interactive Tabbed Box
       ═══════════════════════════════════════════════════════════════ */}
       <Section id="how-it-works" className="bg-ns-card/30">
         <SectionHeading
@@ -542,41 +577,166 @@ function HomePage({ onNavigate }) {
           subtitle="Our proven four-step process takes you from an empty pipeline to a consistently full calendar."
         />
 
-        <div className="relative">
-          {/* Horizontal connector line (desktop) */}
-          <div className="hidden md:block absolute top-16 left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-ns-accent/20 via-ns-accent/60 to-ns-accent/20" />
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-6 relative">
-            {steps.map((step, i) => (
-              <FadeInSection key={i} delay={i * 150}>
-                <div className="relative flex flex-col items-center text-center">
-                  {/* Vertical connector (mobile) */}
-                  {i < steps.length - 1 && (
-                    <div className="md:hidden absolute top-32 left-1/2 -translate-x-1/2 w-0.5 h-8 bg-ns-accent/30" />
-                  )}
-
-                  {/* Numbered circle */}
-                  <div className="relative z-10 w-32 h-32 rounded-full bg-ns-bg border-2 border-ns-accent/40 flex flex-col items-center justify-center mb-6">
-                    <span className="text-ns-accent text-xs font-bold tracking-widest uppercase mb-1">
-                      Step
-                    </span>
-                    <span className="text-3xl font-bold font-heading text-ns-heading">
-                      {step.number}
-                    </span>
-                    <div className="text-ns-accent mt-1">{step.icon}</div>
+        <FadeInSection>
+          <div>
+            {/* Step tabs row */}
+            <div className="grid grid-cols-2 md:grid-cols-4" style={{ gap: 0 }}>
+              {steps.map((step, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActiveStep(i)}
+                  style={{
+                    background: activeStep === i ? '#161B22' : '#0E1116',
+                    borderRadius: i === 0
+                      ? '14px 0 0 0'
+                      : i === steps.length - 1
+                      ? '0 14px 0 0'
+                      : '0',
+                    borderTop: activeStep === i ? '3px solid #5B7C99' : '1px solid rgba(91, 124, 153, 0.2)',
+                    borderLeft: '1px solid rgba(91, 124, 153, 0.2)',
+                    borderRight: '1px solid rgba(91, 124, 153, 0.2)',
+                    borderBottom: activeStep === i ? 'none' : '1px solid rgba(91, 124, 153, 0.2)',
+                    padding: '20px 16px',
+                    cursor: 'pointer',
+                    textAlign: 'center',
+                    transition: 'all 0.3s ease',
+                  }}
+                  className="flex flex-col items-center gap-2"
+                >
+                  <div style={{ color: activeStep === i ? '#5B7C99' : '#5B7C99', opacity: activeStep === i ? 1 : 0.5 }}>
+                    {step.icon}
                   </div>
-
-                  <h3 className="text-xl font-bold font-heading mb-3 text-ns-heading">
+                  <span
+                    style={{
+                      fontFamily: "'IBM Plex Sans', sans-serif",
+                      fontWeight: 500,
+                      fontSize: '10px',
+                      textTransform: 'uppercase',
+                      letterSpacing: '2px',
+                      color: activeStep === i ? '#C9A84C' : '#A1A8B3',
+                    }}
+                  >
+                    Step {step.number}
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: "'Playfair Display', serif",
+                      fontWeight: 600,
+                      fontSize: '14px',
+                      color: activeStep === i ? '#F2F4F8' : '#A1A8B3',
+                    }}
+                  >
                     {step.title}
-                  </h3>
-                  <p className="text-ns-body text-sm leading-relaxed max-w-xs mx-auto">
-                    {step.description}
-                  </p>
+                  </span>
+                </button>
+              ))}
+            </div>
+
+            {/* Detail panel */}
+            <div
+              style={{
+                background: '#161B22',
+                border: '1px solid #5B7C99',
+                borderTop: '3px solid #5B7C99',
+                borderRadius: '0 0 16px 16px',
+                padding: '32px',
+              }}
+            >
+              <div key={activeStep} className="hiw-detail-fade">
+                {/* Step label */}
+                <div className="flex items-center gap-3 mb-6">
+                  <div style={{ color: '#5B7C99' }}>{steps[activeStep].icon}</div>
+                  <span
+                    style={{
+                      fontFamily: "'IBM Plex Sans', sans-serif",
+                      fontWeight: 500,
+                      fontSize: '11px',
+                      textTransform: 'uppercase',
+                      letterSpacing: '2px',
+                      color: '#C9A84C',
+                    }}
+                  >
+                    Step {steps[activeStep].number}
+                  </span>
                 </div>
-              </FadeInSection>
-            ))}
+
+                <h3
+                  style={{
+                    fontFamily: "'Playfair Display', serif",
+                    fontWeight: 700,
+                    fontSize: '28px',
+                    color: '#F2F4F8',
+                    marginBottom: '24px',
+                  }}
+                >
+                  {steps[activeStep].title}
+                </h3>
+
+                {/* Two-column content */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <p
+                    style={{
+                      fontFamily: "'IBM Plex Sans', sans-serif",
+                      fontWeight: 300,
+                      fontSize: '16px',
+                      color: '#A1A8B3',
+                      lineHeight: 1.8,
+                    }}
+                  >
+                    {steps[activeStep].description}
+                  </p>
+                  <div>
+                    <h4
+                      style={{
+                        fontFamily: "'IBM Plex Sans', sans-serif",
+                        fontWeight: 500,
+                        fontSize: '12px',
+                        textTransform: 'uppercase',
+                        letterSpacing: '2px',
+                        color: '#F2F4F8',
+                        marginBottom: '16px',
+                      }}
+                    >
+                      What's Included
+                    </h4>
+                    <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                      {steps[activeStep].includes.map((item, idx) => (
+                        <li key={idx} className="flex items-start gap-3">
+                          <CheckCircle size={16} style={{ color: '#5B7C99', flexShrink: 0, marginTop: '2px' }} />
+                          <span style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 400, fontSize: '14px', color: '#A1A8B3' }}>
+                            {item}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Progress bar */}
+                <div className="flex gap-2 mt-8">
+                  {steps.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setActiveStep(i)}
+                      style={{
+                        flex: 1,
+                        height: '4px',
+                        borderRadius: '2px',
+                        background: i <= activeStep
+                          ? 'linear-gradient(90deg, #5B7C99, #C9A84C)'
+                          : '#0E1116',
+                        border: 'none',
+                        cursor: 'pointer',
+                        padding: 0,
+                        transition: 'background 0.3s ease',
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        </FadeInSection>
       </Section>
 
       {/* ═══════════════════════════════════════════════════════════════

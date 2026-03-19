@@ -89,8 +89,8 @@ function CaseStudiesPage({ onNavigate }) {
           </FadeInSection>
           <FadeInSection delay={200}>
             <div className="glass-card p-6 rounded-2xl text-center">
-              <AnimatedCounter end={43} prefix="£" />
-              <p className="text-ns-body text-sm mt-2">Average Cost Per Lead</p>
+              <AnimatedCounter end={23} suffix="%" />
+              <p className="text-ns-body text-sm mt-2">Average Close Rate</p>
             </div>
           </FadeInSection>
         </div>
