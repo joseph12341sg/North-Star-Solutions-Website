@@ -15,8 +15,8 @@ module.exports = {
         'ns-success': '#4ADE80',
       },
       fontFamily: {
-        'heading': ['Montserrat', 'sans-serif'],
-        'body': ['Open Sans', 'sans-serif'],
+        'heading': ['Playfair Display', 'serif'],
+        'body': ['IBM Plex Sans', 'sans-serif'],
       },
     },
   },

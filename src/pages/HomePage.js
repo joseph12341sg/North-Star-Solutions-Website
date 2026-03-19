@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   ImagePlaceholder,
   AnimatedCounter,
@@ -27,6 +27,7 @@ import {
   Award,
   Lock,
   Eye,
+  Star,
 } from 'lucide-react';
 
 function HomePage({ onNavigate }) {
@@ -215,6 +216,142 @@ function HomePage({ onNavigate }) {
     'Adviser Lounge',
   ];
 
+  // ─── Meta Ads Dashboard Component ──────────────────────────────────
+  const MetaAdsDashboard = () => {
+    const dashRef = useRef(null);
+    const [isVisible, setIsVisible] = useState(false);
+    const [statCounts, setStatCounts] = useState({ leads: 0, cpl: 0, booked: 0 });
+    const [visibleRows, setVisibleRows] = useState([false, false, false]);
+    const hasAnimated = useRef(false);
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting && !hasAnimated.current) {
+            hasAnimated.current = true;
+            setIsVisible(true);
+
+            // Animate stat counters
+            const startTime = Date.now();
+            const duration = 2000;
+            const animate = () => {
+              const elapsed = Date.now() - startTime;
+              const progress = Math.min(elapsed / duration, 1);
+              const eased = 1 - Math.pow(1 - progress, 3);
+              setStatCounts({
+                leads: Math.round(eased * 34),
+                cpl: Math.round(eased * 41),
+                booked: Math.round(eased * 12),
+              });
+              if (progress < 1) requestAnimationFrame(animate);
+            };
+            requestAnimationFrame(animate);
+
+            // Staggered activity rows
+            setTimeout(() => setVisibleRows(prev => [true, prev[1], prev[2]]), 800);
+            setTimeout(() => setVisibleRows(prev => [prev[0], true, prev[2]]), 1400);
+            setTimeout(() => setVisibleRows(prev => [prev[0], prev[1], true]), 2000);
+          }
+        },
+        { threshold: 0.2 }
+      );
+      if (dashRef.current) observer.observe(dashRef.current);
+      return () => observer.disconnect();
+    }, []);
+
+    const activityRows = [
+      { initials: 'JH', color: '#4ADE80', name: 'James Hartley, Director', subtitle: 'Hartley Wealth — Appointment booked', time: '8 min' },
+      { initials: 'SC', color: '#F97316', name: 'Sarah Chen, Co-Founder', subtitle: 'Meridian Financial — Lead qualified', time: '22 min' },
+      { initials: 'EP', color: '#A855F7', name: 'Eleanor Pemberton, CFP', subtitle: 'Pemberton & Assoc — Form submitted', time: '41 min' },
+    ];
+
+    return (
+      <div
+        ref={dashRef}
+        style={{
+          background: '#161B22',
+          borderRadius: '16px',
+          border: '1px solid rgba(91, 124, 153, 0.2)',
+          boxShadow: '0 20px 60px rgba(0,0,0,.4)',
+          padding: '24px',
+          fontFamily: "'IBM Plex Sans', sans-serif",
+        }}
+      >
+        {/* Header */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+          <span style={{ color: '#F2F4F8', fontWeight: 600, fontSize: '14px', letterSpacing: '1px', textTransform: 'uppercase' }}>Meta Ads Dashboard</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div className="live-dot" />
+            <span style={{ color: '#4ADE80', fontSize: '12px', fontWeight: 500 }}>Live</span>
+          </div>
+        </div>
+
+        {/* Stat boxes */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px', marginBottom: '20px' }}>
+          {[
+            { label: 'LEADS', value: statCounts.leads, prefix: '' },
+            { label: 'CPL', value: statCounts.cpl, prefix: '£' },
+            { label: 'BOOKED', value: statCounts.booked, prefix: '' },
+          ].map((stat, i) => (
+            <div key={i} style={{ background: '#0E1116', borderRadius: '10px', padding: '16px', textAlign: 'center' }}>
+              <p style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: '28px', color: '#F2F4F8', lineHeight: 1.2 }}>
+                {stat.prefix}{stat.value}
+              </p>
+              <p style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 500, fontSize: '10px', color: '#A1A8B3', textTransform: 'uppercase', letterSpacing: '1.5px', marginTop: '4px' }}>
+                {stat.label}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Activity rows */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          {activityRows.map((row, i) => (
+            <div
+              key={i}
+              className={visibleRows[i] ? 'dashboard-row-visible' : 'dashboard-row-hidden'}
+              style={{
+                background: '#0E1116',
+                borderRadius: '10px',
+                padding: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+              }}
+            >
+              <div style={{
+                width: '36px',
+                height: '36px',
+                borderRadius: '8px',
+                background: row.color,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: 700,
+                fontSize: '13px',
+                color: '#0E1116',
+                flexShrink: 0,
+              }}>
+                {row.initials}
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <p style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600, fontSize: '13px', color: '#F2F4F8', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  {row.name}
+                </p>
+                <p style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 400, fontSize: '11px', color: '#A1A8B3', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  {row.subtitle}
+                </p>
+              </div>
+              <span style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 400, fontSize: '11px', color: '#5B7C99', flexShrink: 0 }}>
+                {row.time}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div>
       {/* ═══════════════════════════════════════════════════════════════
@@ -234,57 +371,77 @@ function HomePage({ onNavigate }) {
         <div className="absolute inset-0 z-10 bg-gradient-to-t from-ns-bg via-transparent to-ns-bg/30" />
 
         <div className="relative z-20 max-w-7xl mx-auto px-4 md:px-8 py-32 md:py-40 w-full">
-          <FadeInSection>
-            <div className="max-w-3xl">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-heading leading-tight mb-6">
-                We Fill Your Diary With{' '}
-                <span className="text-ns-accent">Pre-Qualified Clients</span>.{' '}
-                <span className="text-ns-gold">Guaranteed.</span>
-              </h1>
-              <p className="text-ns-body text-lg md:text-xl lg:text-2xl mb-10 max-w-2xl leading-relaxed">
-                North Star Solutions helps financial advisors across the UK win 10&ndash;20
-                new clients in 90 days using done-for-you Meta Ads, appointment setting, and
-                nurture systems &mdash; or you don&rsquo;t pay.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button
-                  onClick={() => onNavigate('contact')}
-                  className="cta-button text-lg py-4 px-8 flex items-center justify-center gap-2"
-                >
-                  Book Your Discovery Call <ArrowRight size={20} />
-                </button>
-                <button
-                  onClick={() => {
-                    const el = document.getElementById('how-it-works');
-                    if (el) el.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  className="border border-ns-accent/40 text-ns-heading hover:bg-ns-accent/10 transition-colors rounded-lg py-4 px-8 text-lg font-semibold"
-                >
-                  See How It Works
-                </button>
+          {/* Two-column grid layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Left column: Badge, headline, subheadline, CTAs */}
+            <FadeInSection>
+              <div>
+                <div className="inline-block mb-6 px-4 py-2 rounded-full border border-ns-accent/30 bg-ns-accent/10">
+                  <span className="nav-label text-ns-accent text-xs">Meta Ads for Financial Advisors</span>
+                </div>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-heading leading-tight mb-6">
+                  <span style={{ color: '#F2F4F8' }}>North Star</span>{' '}
+                  <span className="gold-gradient-text">Solutions</span>
+                </h1>
+                <p className="text-ns-body text-lg md:text-xl lg:text-2xl mb-10 max-w-2xl leading-relaxed" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 300 }}>
+                  We build and run your entire client acquisition engine &mdash; Meta Ads,
+                  appointment setting, nurture sequences &mdash; so you focus on what you do
+                  best: advising clients.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <button
+                    onClick={() => onNavigate('contact')}
+                    className="cta-button text-lg py-4 px-8 flex items-center justify-center gap-2"
+                  >
+                    Book Your Discovery Call <ArrowRight size={20} />
+                  </button>
+                  <button
+                    onClick={() => {
+                      const el = document.getElementById('how-it-works');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="border border-ns-accent/40 text-ns-heading hover:bg-ns-accent/10 transition-colors rounded-lg py-4 px-8 text-lg font-semibold"
+                    style={{ fontFamily: "'IBM Plex Sans', sans-serif" }}
+                  >
+                    See How It Works
+                  </button>
+                </div>
               </div>
-            </div>
-          </FadeInSection>
+            </FadeInSection>
+
+            {/* Right column: Animated Meta Ads Dashboard */}
+            <FadeInSection delay={200}>
+              <MetaAdsDashboard />
+            </FadeInSection>
+          </div>
 
           {/* Social proof stats bar */}
-          <FadeInSection delay={300}>
+          <FadeInSection delay={400}>
             <div className="mt-16 md:mt-20 grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[
-                { value: '320+', label: 'Clients Delivered' },
-                { value: '93%', label: 'Show Rate' },
-                { value: '\u00a32.4M+', label: 'Revenue Generated' },
-                { value: '4.9\u2605', label: 'Client Satisfaction' },
-              ].map((stat, i) => (
-                <div
-                  key={i}
-                  className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-5 text-center"
-                >
-                  <p className="text-2xl md:text-3xl font-bold font-heading text-ns-heading mb-1">
-                    {stat.value}
-                  </p>
-                  <p className="text-ns-body text-sm">{stat.label}</p>
+              {/* Stat 1: 320+ Clients Delivered */}
+              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-5 text-center">
+                <AnimatedCounter end={320} suffix="+" />
+                <p className="text-ns-body text-sm mt-1 nav-label" style={{ fontSize: '11px' }}>Clients Delivered</p>
+              </div>
+              {/* Stat 2: 93% Average Show Rate */}
+              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-5 text-center">
+                <AnimatedCounter end={93} suffix="%" />
+                <p className="text-ns-body text-sm mt-1 nav-label" style={{ fontSize: '11px' }}>Average Show Rate</p>
+              </div>
+              {/* Stat 3: 23% Average Close Rate */}
+              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-5 text-center">
+                <AnimatedCounter end={23} suffix="%" />
+                <p className="text-ns-body text-sm mt-1 nav-label" style={{ fontSize: '11px' }}>Average Close Rate</p>
+              </div>
+              {/* Stat 4: 5 Gold Stars — Client Rating */}
+              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-5 text-center">
+                <div className="flex justify-center gap-1 mb-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={24} fill="#C9A84C" color="#C9A84C" />
+                  ))}
                 </div>
-              ))}
+                <p className="text-ns-body text-sm mt-1 nav-label" style={{ fontSize: '11px' }}>Client Rating</p>
+              </div>
             </div>
           </FadeInSection>
         </div>
@@ -433,28 +590,34 @@ function HomePage({ onNavigate }) {
 
         {/* Large stat cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {[
-            { end: 320, suffix: '+', label: 'New Clients Delivered', prefix: '' },
-            { end: 93, suffix: '%', label: 'Average Show Rate', prefix: '' },
-            { end: 47, suffix: '', label: 'Average Cost Per Lead', prefix: '\u00a3' },
-            { end: 90, suffix: '', label: 'Day Guarantee', prefix: '' },
-          ].map((stat, i) => (
-            <FadeInSection key={i} delay={i * 100}>
-              <div className="glass-card p-8 text-center">
-                <AnimatedCounter
-                  end={stat.end}
-                  prefix={stat.prefix}
-                  suffix={stat.suffix}
-                />
-                <p className="text-ns-body text-sm mt-2">{stat.label}</p>
-                {i === 3 && (
-                  <p className="text-ns-accent text-xs mt-1 font-semibold">
-                    10&ndash;20 Clients Guaranteed
-                  </p>
-                )}
+          <FadeInSection delay={0}>
+            <div className="glass-card p-8 text-center">
+              <AnimatedCounter end={320} suffix="+" />
+              <p className="text-ns-body text-sm mt-2">Clients Delivered</p>
+            </div>
+          </FadeInSection>
+          <FadeInSection delay={100}>
+            <div className="glass-card p-8 text-center">
+              <AnimatedCounter end={93} suffix="%" />
+              <p className="text-ns-body text-sm mt-2">Average Show Rate</p>
+            </div>
+          </FadeInSection>
+          <FadeInSection delay={200}>
+            <div className="glass-card p-8 text-center">
+              <AnimatedCounter end={23} suffix="%" />
+              <p className="text-ns-body text-sm mt-2">Average Close Rate</p>
+            </div>
+          </FadeInSection>
+          <FadeInSection delay={300}>
+            <div className="glass-card p-8 text-center">
+              <div className="flex justify-center gap-1 mb-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={28} fill="#C9A84C" color="#C9A84C" />
+                ))}
               </div>
-            </FadeInSection>
-          ))}
+              <p className="text-ns-body text-sm mt-2">Client Rating</p>
+            </div>
+          </FadeInSection>
         </div>
 
         {/* Mini case study cards */}
