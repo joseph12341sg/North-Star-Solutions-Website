@@ -2,14 +2,18 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Camera, Compass, Star, Phone, Mail, MapPin, Linkedin, Facebook, Instagram, Twitter, Menu, X, ArrowUp } from 'lucide-react';
 
 // ─── Logo Image ─────────────────────────────────────────────────────
-// Uses the actual logo PNG if available, falls back to Compass icon
-const LOGO_SRC = process.env.PUBLIC_URL + '/logo-transparent.png';
+const LOGO_SRC = process.env.PUBLIC_URL + '/images/logo.svg';
 
-export function LogoImage({ height = 36, className = '' }) {
+export function LogoImage({ height = 36, className = '', rotate = false }) {
   const [imgError, setImgError] = useState(false);
 
+  const style = {
+    height,
+    width: 'auto',
+    ...(rotate ? { animation: 'spin-slow 8s linear infinite' } : {}),
+  };
+
   if (imgError) {
-    // Fallback: Compass icon in a gradient box
     return (
       <div
         style={{
@@ -21,6 +25,7 @@ export function LogoImage({ height = 36, className = '' }) {
           alignItems: 'center',
           justifyContent: 'center',
           flexShrink: 0,
+          ...(rotate ? { animation: 'spin-slow 8s linear infinite' } : {}),
         }}
         className={className}
       >
@@ -33,7 +38,7 @@ export function LogoImage({ height = 36, className = '' }) {
     <img
       src={LOGO_SRC}
       alt="North Star Solutions"
-      style={{ height, width: 'auto' }}
+      style={style}
       className={className}
       onError={() => setImgError(true)}
     />
@@ -88,14 +93,14 @@ export function LoadingScreen({ onFinish }) {
         transition: 'opacity 0.5s ease-out',
       }}
     >
-      {/* Element 1: Logo */}
+      {/* Element 1: Logo — slowly rotating compass star */}
       <div
         style={{
           opacity: logoVisible ? 1 : 0,
           transition: 'opacity 1.2s ease-out',
         }}
       >
-        <LogoImage height={120} />
+        <LogoImage height={120} rotate={true} />
       </div>
 
       {/* Element 2: Thin horizontal line */}

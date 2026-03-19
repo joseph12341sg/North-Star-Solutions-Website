@@ -140,29 +140,23 @@ const timeline = [
   },
 ];
 
-// ─── Included / Not Included Data ────────────────────────────────────
-const included = [
-  'Meta ad campaign management',
-  'Ad creative & copywriting',
-  'Landing page build',
-  'Lead qualification',
-  'Appointment setting',
-  'Nurture sequences',
-  'Real-time dashboard',
-  'Weekly reports',
-  'Monthly strategy calls',
-  'Compliance review',
-  'CRM integration',
-  'Dedicated account manager',
+// ─── Who This Is For / Who This Isn't For ────────────────────────────
+const thisIsFor = [
+  'Financial advisors who want a predictable stream of new clients',
+  'IFAs tired of relying solely on referrals',
+  'Practices ready to invest in growth and scale',
+  'Advisors who want done-for-you marketing — not DIY courses',
+  'Firms that can handle 10–20 new clients in 90 days',
+  'Professionals who value compliance and reputation',
 ];
 
-const notIncluded = [
-  'Cold calling on your behalf',
-  'Doorknocking',
-  'SEO/Google Ads (not our specialism)',
-  'Social media management',
-  'Website design (separate service)',
-  'PR or media buying',
+const thisIsntFor = [
+  'Advisors looking for a magic bullet with zero effort',
+  'Firms not willing to invest in ad spend alongside management fees',
+  'Anyone expecting results without attending booked appointments',
+  'Practices with no capacity to take on new clients',
+  'People looking for social media management or SEO',
+  'Those who want to micromanage every ad and landing page',
 ];
 
 // ─── Service Card Component ──────────────────────────────────────────
@@ -298,24 +292,24 @@ function ServicesPage({ onNavigate }) {
         </div>
       </Section>
 
-      {/* ── What's Included vs What's Not ────────────────────────── */}
-      <Section id="included">
+      {/* ── Who This Is For vs Who This Isn't For ────────────────── */}
+      <Section id="who-its-for">
         <SectionHeading
-          title="What's Included vs What's Not"
-          subtitle="Full transparency. No surprises."
+          title="Who This Is For"
+          subtitle="We're not for everyone — and that's by design."
         />
         <FadeInSection>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
-            {/* Included */}
+            {/* This Is For */}
             <div className="glass-card p-6 md:p-8">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-full bg-green-500/10 border border-green-500/30 flex items-center justify-center">
                   <CheckCircle size={20} className="text-green-400" />
                 </div>
-                <h3 className="text-xl font-bold font-heading text-green-400">What's Included</h3>
+                <h3 className="text-xl font-bold font-heading text-green-400">This Is For You If…</h3>
               </div>
               <ul className="space-y-3">
-                {included.map((item, i) => (
+                {thisIsFor.map((item, i) => (
                   <li key={i} className="flex items-center gap-3">
                     <CheckCircle size={16} className="text-green-400 flex-shrink-0" />
                     <span className="text-ns-body text-sm md:text-base">{item}</span>
@@ -324,16 +318,16 @@ function ServicesPage({ onNavigate }) {
               </ul>
             </div>
 
-            {/* Not Included */}
+            {/* This Isn't For */}
             <div className="glass-card p-6 md:p-8">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center">
                   <XIcon size={20} className="text-red-400" />
                 </div>
-                <h3 className="text-xl font-bold font-heading text-red-400">Not Included</h3>
+                <h3 className="text-xl font-bold font-heading text-red-400">This Isn't For You If…</h3>
               </div>
               <ul className="space-y-3">
-                {notIncluded.map((item, i) => (
+                {thisIsntFor.map((item, i) => (
                   <li key={i} className="flex items-center gap-3">
                     <XIcon size={16} className="text-red-400 flex-shrink-0" />
                     <span className="text-ns-body text-sm md:text-base">{item}</span>

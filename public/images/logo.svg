@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- North Star / Compass Rose Logo -->
+  <g transform="translate(100,100)">
+    <!-- Main 4-point star (N, S, E, W) -->
+    <!-- North point -->
+    <polygon points="0,-95 -12,-25 0,-35 12,-25" fill="#2563EB"/>
+    <!-- South point -->
+    <polygon points="0,95 -12,25 0,35 12,25" fill="#2563EB"/>
+    <!-- East point -->
+    <polygon points="95,0 25,-12 35,0 25,12" fill="#2563EB"/>
+    <!-- West point -->
+    <polygon points="-95,0 -25,-12 -35,0 -25,12" fill="#2563EB"/>
+    <!-- Diagonal points (NE, NW, SE, SW) -->
+    <!-- NE -->
+    <polygon points="55,-55 12,-20 20,-12" fill="#3B82F6"/>
+    <!-- NW -->
+    <polygon points="-55,-55 -12,-20 -20,-12" fill="#3B82F6"/>
+    <!-- SE -->
+    <polygon points="55,55 12,20 20,12" fill="#3B82F6"/>
+    <!-- SW -->
+    <polygon points="-55,55 -12,20 -20,12" fill="#3B82F6"/>
+    <!-- Inner diamond accents -->
+    <polygon points="0,-35 12,-25 0,0 -12,-25" fill="#1D4ED8"/>
+    <polygon points="0,35 12,25 0,0 -12,25" fill="#1D4ED8"/>
+    <polygon points="-35,0 -25,12 0,0 -25,-12" fill="#1D4ED8"/>
+    <polygon points="35,0 25,12 0,0 25,-12" fill="#1D4ED8"/>
+  </g>
+</svg>
