@@ -411,17 +411,17 @@ function HomePage({ onNavigate }) {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button
                     onClick={() => onNavigate('contact')}
-                    className="cta-button text-lg py-4 px-8 flex items-center justify-center gap-2"
+                    className="cta-button py-4 px-8 flex items-center justify-center gap-2 whitespace-nowrap text-sm"
                   >
-                    Book Your Discovery Call <ArrowRight size={20} />
+                    Book Your Discovery Call <ArrowRight size={18} />
                   </button>
                   <button
                     onClick={() => {
                       const el = document.getElementById('how-it-works');
                       if (el) el.scrollIntoView({ behavior: 'smooth' });
                     }}
-                    className="border border-ns-accent/40 text-ns-heading hover:bg-ns-accent/10 transition-colors rounded-lg py-4 px-8 text-lg font-semibold"
-                    style={{ fontFamily: "'IBM Plex Sans', sans-serif" }}
+                    className="border border-ns-accent/40 text-ns-heading hover:bg-ns-accent/10 transition-colors rounded-lg py-4 px-8 text-sm font-medium whitespace-nowrap"
+                    style={{ fontFamily: "'IBM Plex Sans', sans-serif", letterSpacing: '1px' }}
                   >
                     See How It Works
                   </button>
@@ -470,26 +470,18 @@ function HomePage({ onNavigate }) {
       {/* ═══════════════════════════════════════════════════════════════
           2. TRUST BAR / LOGO STRIP
       ═══════════════════════════════════════════════════════════════ */}
-      <section className="py-10 md:py-14 border-y border-ns-accent/10 overflow-hidden bg-ns-card/50">
+      <section className="py-10 md:py-14 border-y border-ns-accent/10 bg-ns-card/50">
         <p className="text-center text-ns-body text-sm md:text-base mb-8 tracking-wide uppercase">
           Trusted by financial advisors across the UK
         </p>
-        <div
-          className="marquee-container"
-          style={{
-            overflow: 'hidden',
-            maskImage: 'linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%)',
-            WebkitMaskImage: 'linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%)',
-          }}
-        >
-          <div className="marquee-track" style={{ display: 'flex', gap: '32px', alignItems: 'center', width: 'max-content' }}>
-            {[...publications, ...publications].map((name, i) => (
+        <div className="max-w-5xl mx-auto px-4 md:px-8">
+          <div className="flex flex-wrap justify-center gap-3 md:gap-4">
+            {publications.map((name, i) => (
               <div
                 key={i}
-                className="bg-white/5 border border-white/10 rounded-lg px-6 py-3 min-w-[160px] text-center"
-                style={{ flexShrink: 0 }}
+                className="bg-white/5 border border-white/10 rounded-lg px-5 py-3 text-center"
               >
-                <span className="text-ns-body text-sm font-medium">{name}</span>
+                <span className="text-ns-body text-sm font-medium whitespace-nowrap">{name}</span>
               </div>
             ))}
           </div>
