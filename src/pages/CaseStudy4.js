@@ -11,13 +11,10 @@ import {
 import {
   ArrowLeft,
   CheckCircle,
-  Clock,
   MapPin,
   Briefcase,
   Users,
   Target,
-  TrendingUp,
-  Zap,
   MessageSquare,
   Shield,
   Award,

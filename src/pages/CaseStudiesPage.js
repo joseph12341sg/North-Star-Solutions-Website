@@ -1,6 +1,6 @@
 import React from 'react';
 import { ImagePlaceholder, AnimatedCounter, FadeInSection, Section, SectionHeading, CTASection } from '../components/shared';
-import { ArrowRight, Users, Clock, PoundSterling, TrendingUp, MapPin, Briefcase } from 'lucide-react';
+import { ArrowRight, MapPin, Briefcase } from 'lucide-react';
 
 const caseStudies = [
   {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   ImagePlaceholder,
   AnimatedCounter,
@@ -14,19 +14,14 @@ import {
   Clock,
   Shield,
   MapPin,
-  Zap,
   CheckCircle,
   ArrowRight,
   TrendingUp,
   AlertCircle,
-  Calendar,
   BarChart3,
-  Headphones,
-  Mail,
   MessageSquare,
   Award,
   Lock,
-  Eye,
   Star,
   Rocket,
   Phone,
@@ -246,7 +241,6 @@ function HomePage({ onNavigate }) {
   // ─── Meta Ads Dashboard Component ──────────────────────────────────
   const MetaAdsDashboard = () => {
     const dashRef = useRef(null);
-    const [isVisible, setIsVisible] = useState(false);
     const [statCounts, setStatCounts] = useState({ leads: 0, cpl: 0, booked: 0 });
     const [visibleRows, setVisibleRows] = useState([false, false, false]);
     const hasAnimated = useRef(false);
@@ -256,7 +250,6 @@ function HomePage({ onNavigate }) {
         ([entry]) => {
           if (entry.isIntersecting && !hasAnimated.current) {
             hasAnimated.current = true;
-            setIsVisible(true);
 
             // Animate stat counters
             const startTime = Date.now();

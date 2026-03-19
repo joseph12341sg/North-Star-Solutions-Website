@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Navigation, Footer, FloatingCTA } from './components/shared';
+import { Navigation, Footer, FloatingCTA, LoadingScreen } from './components/shared';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import ServicesPage from './pages/ServicesPage';
@@ -13,6 +13,7 @@ import CareersPage from './pages/CareersPage';
 import ContactPage from './pages/ContactPage';
 
 function App() {
+  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState('home');
   const [pageTransition, setPageTransition] = useState(true);
 
@@ -44,6 +45,10 @@ function App() {
     // Update hash when page changes
     window.location.hash = currentPage;
   }, [currentPage]);
+
+  if (loading) {
+    return <LoadingScreen onFinish={() => setLoading(false)} />;
+  }
 
   const renderPage = () => {
     const props = { onNavigate: navigate };

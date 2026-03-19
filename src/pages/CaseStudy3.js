@@ -11,17 +11,13 @@ import {
 import {
   ArrowLeft,
   CheckCircle,
-  Clock,
   MapPin,
   Briefcase,
   Users,
   Target,
-  TrendingUp,
   Zap,
   MessageSquare,
-  Shield,
   Home,
-  PoundSterling,
   AlertTriangle,
 } from 'lucide-react';
 

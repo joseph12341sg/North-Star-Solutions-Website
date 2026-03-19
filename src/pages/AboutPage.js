@@ -1,6 +1,6 @@
 import React from 'react';
 import { ImagePlaceholder, AnimatedCounter, FadeInSection, Section, SectionHeading, CTASection } from '../components/shared';
-import { Target, Eye, Shield, Handshake, Users, Award, TrendingUp, Clock, Globe, ArrowRight, CheckCircle, Compass } from 'lucide-react';
+import { Target, Eye, Shield, Handshake, Users, Award, TrendingUp, Clock, Globe, Compass } from 'lucide-react';
 
 function AboutPage({ onNavigate }) {
   const values = [

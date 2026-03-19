@@ -1,7 +1,7 @@
 import React from 'react';
-import { ImagePlaceholder, FadeInSection, Section, SectionHeading, CTASection } from '../components/shared';
+import { ImagePlaceholder, FadeInSection, Section, SectionHeading } from '../components/shared';
 import {
-  TrendingUp, Globe, Target, Heart, Briefcase, MapPin, Clock,
+  TrendingUp, Globe, Target, Heart, Briefcase, MapPin,
   PoundSterling, Gift, Monitor, Users, BookOpen, Coffee, Mail, ArrowRight
 } from 'lucide-react';
 

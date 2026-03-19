@@ -1,6 +1,155 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Camera, Compass, Star, Phone, Mail, MapPin, Linkedin, Facebook, Instagram, Twitter, Menu, X, ArrowUp } from 'lucide-react';
 
+// ─── Logo Image ─────────────────────────────────────────────────────
+// Uses the actual logo PNG if available, falls back to Compass icon
+const LOGO_SRC = process.env.PUBLIC_URL + '/logo-transparent.png';
+
+export function LogoImage({ height = 36, className = '' }) {
+  const [imgError, setImgError] = useState(false);
+
+  if (imgError) {
+    // Fallback: Compass icon in a gradient box
+    return (
+      <div
+        style={{
+          width: height,
+          height: height,
+          borderRadius: '10px',
+          background: 'linear-gradient(135deg, #5B7C99, #C9A84C)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexShrink: 0,
+        }}
+        className={className}
+      >
+        <Compass size={height * 0.6} color="#0E1116" strokeWidth={1.5} />
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={LOGO_SRC}
+      alt="North Star Solutions"
+      style={{ height, width: 'auto' }}
+      className={className}
+      onError={() => setImgError(true)}
+    />
+  );
+}
+
+// ─── Loading Screen ─────────────────────────────────────────────────
+export function LoadingScreen({ onFinish }) {
+  const [logoVisible, setLogoVisible] = useState(false);
+  const [lineExpanded, setLineExpanded] = useState(false);
+  const [nameVisible, setNameVisible] = useState(false);
+  const [barStarted, setBarStarted] = useState(false);
+  const [fadeOut, setFadeOut] = useState(false);
+
+  useEffect(() => {
+    // 0.0s — Logo begins fade in
+    const t0 = setTimeout(() => setLogoVisible(true), 50);
+    // 1.8s — Line expands
+    const t1 = setTimeout(() => setLineExpanded(true), 1800);
+    // 2.2s — Company name fades in
+    const t2 = setTimeout(() => setNameVisible(true), 2200);
+    // 2.4s — Loading bar starts
+    const t3 = setTimeout(() => setBarStarted(true), 2400);
+    // 5.0s — Fade out entire screen
+    const t4 = setTimeout(() => setFadeOut(true), 5000);
+    // 5.5s — Remove from DOM
+    const t5 = setTimeout(() => onFinish(), 5500);
+
+    return () => {
+      clearTimeout(t0);
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      clearTimeout(t4);
+      clearTimeout(t5);
+    };
+  }, [onFinish]);
+
+  return (
+    <div
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 10000,
+        background: '#0E1116',
+        backgroundImage: 'radial-gradient(ellipse at 50% 45%, rgba(91, 124, 153, 0.06) 0%, transparent 60%)',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        opacity: fadeOut ? 0 : 1,
+        transition: 'opacity 0.5s ease-out',
+      }}
+    >
+      {/* Element 1: Logo */}
+      <div
+        style={{
+          opacity: logoVisible ? 1 : 0,
+          transition: 'opacity 1.2s ease-out',
+        }}
+      >
+        <LogoImage height={120} />
+      </div>
+
+      {/* Element 2: Thin horizontal line */}
+      <div
+        style={{
+          width: lineExpanded ? '80px' : '0px',
+          height: '2px',
+          background: '#5B7C99',
+          margin: '24px auto',
+          transition: 'width 0.6s ease-out',
+        }}
+      />
+
+      {/* Element 3: Company name */}
+      <div
+        style={{
+          opacity: nameVisible ? 1 : 0,
+          transition: 'opacity 0.5s ease-out',
+          fontFamily: "'IBM Plex Sans', sans-serif",
+          fontWeight: 500,
+          textTransform: 'uppercase',
+          letterSpacing: '6px',
+          fontSize: '14px',
+          color: '#A1A8B3',
+        }}
+      >
+        NORTH STAR SOLUTIONS
+      </div>
+
+      {/* Element 4: Subtle loading bar */}
+      <div
+        style={{
+          width: '200px',
+          height: '2px',
+          background: '#161B22',
+          borderRadius: '1px',
+          marginTop: '32px',
+          overflow: 'hidden',
+        }}
+      >
+        <div
+          style={{
+            width: barStarted ? '100%' : '0%',
+            height: '100%',
+            background: 'linear-gradient(90deg, #5B7C99, #C9A84C)',
+            borderRadius: '1px',
+            transition: 'width 2.4s ease-out',
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
 // ─── Image Placeholder ───────────────────────────────────────────────
 export function ImagePlaceholder({ description, className = '', circle = false, height = 'h-48' }) {
   return (
@@ -156,10 +305,19 @@ export function Navigation({ currentPage, onNavigate }) {
         <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <button onClick={() => handleNav('home')} className="flex items-center gap-2 group">
-            <Compass size={28} className="text-ns-accent group-hover:text-ns-gold transition-colors" />
-            <span className="font-heading text-ns-heading">
-              <span className="font-extrabold">NORTH STAR</span>{' '}
-              <span className="font-light text-ns-body">SOLUTIONS</span>
+            <LogoImage height={36} />
+            <span
+              style={{
+                fontFamily: "'IBM Plex Sans', sans-serif",
+                fontWeight: 500,
+                textTransform: 'uppercase',
+                letterSpacing: '3px',
+                fontSize: '13px',
+              }}
+              className="text-ns-heading"
+            >
+              <span style={{ fontWeight: 600 }}>NORTH STAR</span>{' '}
+              <span className="text-ns-body" style={{ fontWeight: 300 }}>SOLUTIONS</span>
             </span>
           </button>
 
@@ -231,10 +389,19 @@ export function Footer({ onNavigate }) {
           {/* Logo & Tagline */}
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <Compass size={24} className="text-ns-accent" />
-              <span className="font-heading text-ns-heading">
-                <span className="font-extrabold">NORTH STAR</span>{' '}
-                <span className="font-light text-ns-body text-sm">SOLUTIONS</span>
+              <LogoImage height={32} />
+              <span
+                style={{
+                  fontFamily: "'IBM Plex Sans', sans-serif",
+                  fontWeight: 500,
+                  textTransform: 'uppercase',
+                  letterSpacing: '3px',
+                  fontSize: '12px',
+                }}
+                className="text-ns-heading"
+              >
+                <span style={{ fontWeight: 600 }}>NORTH STAR</span>{' '}
+                <span className="text-ns-body" style={{ fontWeight: 300 }}>SOLUTIONS</span>
               </span>
             </div>
             <p className="text-ns-body text-sm mb-4">Your Growth. Our Mission.</p>
