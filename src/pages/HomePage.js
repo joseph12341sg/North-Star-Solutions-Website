@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   ImagePlaceholder,
   AnimatedCounter,
@@ -27,6 +27,9 @@ import {
   Award,
   Lock,
   Eye,
+  Star,
+  Rocket,
+  Phone,
 } from 'lucide-react';
 
 function HomePage({ onNavigate }) {
@@ -85,34 +88,59 @@ function HomePage({ onNavigate }) {
   ];
 
   // ─── How-it-works steps ─────────────────────────────────────────────
+  const [activeStep, setActiveStep] = useState(0);
   const steps = [
     {
       number: '01',
       title: 'Discovery & Strategy',
       description:
         'We learn your ideal client, your specialisms, your capacity. We build a bespoke acquisition strategy around YOUR practice.',
-      icon: <Eye size={24} />,
+      icon: <Target size={24} />,
+      includes: [
+        'Deep-dive into your niche and ideal client avatar',
+        'Geographic and demographic targeting plan',
+        'Competitor landscape analysis',
+        'Custom campaign architecture blueprint',
+      ],
     },
     {
       number: '02',
       title: 'Campaign Build & Launch',
       description:
         'Our team builds your Meta Ads campaigns, landing pages, and lead capture systems. Compliant, professional, and proven to convert.',
-      icon: <Zap size={24} />,
+      icon: <Rocket size={24} />,
+      includes: [
+        'FCA-conscious ad copy and creative',
+        'High-converting landing page build',
+        'A/B testing framework setup',
+        'Tracking and attribution configured',
+      ],
     },
     {
       number: '03',
       title: 'Leads & Appointment Setting',
       description:
-        'Leads come in. Our trained appointment setters contact every lead within 60 seconds, qualify them, and book them directly into your calendar.',
-      icon: <Headphones size={24} />,
+        'Leads come in. Our trained setters contact every lead within 60 seconds, qualify them, and book them directly into your calendar.',
+      icon: <Phone size={24} />,
+      includes: [
+        'Sub-60-second lead response time',
+        'Financial services trained setters',
+        'Pre-qualification against your criteria',
+        'Direct calendar integration',
+      ],
     },
     {
       number: '04',
       title: 'Nurture & Show',
       description:
-        'Every booked prospect goes through our pre-meeting nurture sequence \u2014 emails, SMS, reminders \u2014 so they show up educated, warmed up, and ready to talk.',
+        'Every booked prospect goes through our pre-meeting nurture sequence \u2014 emails, SMS, reminders \u2014 so they show up ready to talk.',
       icon: <MessageSquare size={24} />,
+      includes: [
+        '5-touch pre-meeting email sequence',
+        'Strategic SMS reminders',
+        'Pre-meeting education content',
+        '93% average show rate',
+      ],
     },
   ];
 
@@ -210,10 +238,146 @@ function HomePage({ onNavigate }) {
     'Professional Adviser',
     'Citywire',
     'IFA Magazine',
-    'New Model Adviser',
-    'FT Wealth',
+    'Financial Reporter',
     'Adviser Lounge',
+    'New Model Adviser',
   ];
+
+  // ─── Meta Ads Dashboard Component ──────────────────────────────────
+  const MetaAdsDashboard = () => {
+    const dashRef = useRef(null);
+    const [isVisible, setIsVisible] = useState(false);
+    const [statCounts, setStatCounts] = useState({ leads: 0, cpl: 0, booked: 0 });
+    const [visibleRows, setVisibleRows] = useState([false, false, false]);
+    const hasAnimated = useRef(false);
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting && !hasAnimated.current) {
+            hasAnimated.current = true;
+            setIsVisible(true);
+
+            // Animate stat counters
+            const startTime = Date.now();
+            const duration = 2000;
+            const animate = () => {
+              const elapsed = Date.now() - startTime;
+              const progress = Math.min(elapsed / duration, 1);
+              const eased = 1 - Math.pow(1 - progress, 3);
+              setStatCounts({
+                leads: Math.round(eased * 34),
+                cpl: Math.round(eased * 41),
+                booked: Math.round(eased * 12),
+              });
+              if (progress < 1) requestAnimationFrame(animate);
+            };
+            requestAnimationFrame(animate);
+
+            // Staggered activity rows
+            setTimeout(() => setVisibleRows(prev => [true, prev[1], prev[2]]), 800);
+            setTimeout(() => setVisibleRows(prev => [prev[0], true, prev[2]]), 1400);
+            setTimeout(() => setVisibleRows(prev => [prev[0], prev[1], true]), 2000);
+          }
+        },
+        { threshold: 0.2 }
+      );
+      if (dashRef.current) observer.observe(dashRef.current);
+      return () => observer.disconnect();
+    }, []);
+
+    const activityRows = [
+      { initials: 'JH', color: '#4ADE80', name: 'James Hartley, Director', subtitle: 'Hartley Wealth — Appointment booked', time: '8 min' },
+      { initials: 'SC', color: '#F97316', name: 'Sarah Chen, Co-Founder', subtitle: 'Meridian Financial — Lead qualified', time: '22 min' },
+      { initials: 'EP', color: '#A855F7', name: 'Eleanor Pemberton, CFP', subtitle: 'Pemberton & Assoc — Form submitted', time: '41 min' },
+    ];
+
+    return (
+      <div
+        ref={dashRef}
+        style={{
+          background: '#161B22',
+          borderRadius: '16px',
+          border: '1px solid rgba(91, 124, 153, 0.2)',
+          boxShadow: '0 20px 60px rgba(0,0,0,.4)',
+          padding: '24px',
+          fontFamily: "'IBM Plex Sans', sans-serif",
+        }}
+      >
+        {/* Header */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+          <span style={{ color: '#F2F4F8', fontWeight: 600, fontSize: '14px', letterSpacing: '1px', textTransform: 'uppercase' }}>Meta Ads Dashboard</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div className="live-dot" />
+            <span style={{ color: '#4ADE80', fontSize: '12px', fontWeight: 500 }}>Live</span>
+          </div>
+        </div>
+
+        {/* Stat boxes */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px', marginBottom: '20px' }}>
+          {[
+            { label: 'LEADS', value: statCounts.leads, prefix: '' },
+            { label: 'CPL', value: statCounts.cpl, prefix: '£' },
+            { label: 'BOOKED', value: statCounts.booked, prefix: '' },
+          ].map((stat, i) => (
+            <div key={i} style={{ background: '#0E1116', borderRadius: '10px', padding: '16px', textAlign: 'center' }}>
+              <p style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: '28px', color: '#F2F4F8', lineHeight: 1.2 }}>
+                {stat.prefix}{stat.value}
+              </p>
+              <p style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 500, fontSize: '10px', color: '#A1A8B3', textTransform: 'uppercase', letterSpacing: '1.5px', marginTop: '4px' }}>
+                {stat.label}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Activity rows */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          {activityRows.map((row, i) => (
+            <div
+              key={i}
+              className={visibleRows[i] ? 'dashboard-row-visible' : 'dashboard-row-hidden'}
+              style={{
+                background: '#0E1116',
+                borderRadius: '10px',
+                padding: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+              }}
+            >
+              <div style={{
+                width: '36px',
+                height: '36px',
+                borderRadius: '8px',
+                background: row.color,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: 700,
+                fontSize: '13px',
+                color: '#0E1116',
+                flexShrink: 0,
+              }}>
+                {row.initials}
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <p style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600, fontSize: '13px', color: '#F2F4F8', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  {row.name}
+                </p>
+                <p style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 400, fontSize: '11px', color: '#A1A8B3', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  {row.subtitle}
+                </p>
+              </div>
+              <span style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 400, fontSize: '11px', color: '#5B7C99', flexShrink: 0 }}>
+                {row.time}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div>
@@ -234,57 +398,77 @@ function HomePage({ onNavigate }) {
         <div className="absolute inset-0 z-10 bg-gradient-to-t from-ns-bg via-transparent to-ns-bg/30" />
 
         <div className="relative z-20 max-w-7xl mx-auto px-4 md:px-8 py-32 md:py-40 w-full">
-          <FadeInSection>
-            <div className="max-w-3xl">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-heading leading-tight mb-6">
-                We Fill Your Diary With{' '}
-                <span className="text-ns-accent">Pre-Qualified Clients</span>.{' '}
-                <span className="text-ns-gold">Guaranteed.</span>
-              </h1>
-              <p className="text-ns-body text-lg md:text-xl lg:text-2xl mb-10 max-w-2xl leading-relaxed">
-                North Star Solutions helps financial advisors across the UK win 10&ndash;20
-                new clients in 90 days using done-for-you Meta Ads, appointment setting, and
-                nurture systems &mdash; or you don&rsquo;t pay.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button
-                  onClick={() => onNavigate('contact')}
-                  className="cta-button text-lg py-4 px-8 flex items-center justify-center gap-2"
-                >
-                  Book Your Discovery Call <ArrowRight size={20} />
-                </button>
-                <button
-                  onClick={() => {
-                    const el = document.getElementById('how-it-works');
-                    if (el) el.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  className="border border-ns-accent/40 text-ns-heading hover:bg-ns-accent/10 transition-colors rounded-lg py-4 px-8 text-lg font-semibold"
-                >
-                  See How It Works
-                </button>
+          {/* Two-column grid layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Left column: Badge, headline, subheadline, CTAs */}
+            <FadeInSection>
+              <div>
+                <div className="inline-block mb-6 px-4 py-2 rounded-full border border-ns-accent/30 bg-ns-accent/10">
+                  <span className="nav-label text-ns-accent text-xs">Meta Ads for Financial Advisors</span>
+                </div>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-heading leading-tight mb-6">
+                  <span style={{ color: '#F2F4F8' }}>North Star</span>{' '}
+                  <span className="gold-gradient-text">Solutions</span>
+                </h1>
+                <p className="text-ns-body text-lg md:text-xl lg:text-2xl mb-10 max-w-2xl leading-relaxed" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 300 }}>
+                  We build and run your entire client acquisition engine &mdash; Meta Ads,
+                  appointment setting, nurture sequences &mdash; so you focus on what you do
+                  best: advising clients.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <button
+                    onClick={() => onNavigate('contact')}
+                    className="cta-button text-lg py-4 px-8 flex items-center justify-center gap-2"
+                  >
+                    Book Your Discovery Call <ArrowRight size={20} />
+                  </button>
+                  <button
+                    onClick={() => {
+                      const el = document.getElementById('how-it-works');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="border border-ns-accent/40 text-ns-heading hover:bg-ns-accent/10 transition-colors rounded-lg py-4 px-8 text-lg font-semibold"
+                    style={{ fontFamily: "'IBM Plex Sans', sans-serif" }}
+                  >
+                    See How It Works
+                  </button>
+                </div>
               </div>
-            </div>
-          </FadeInSection>
+            </FadeInSection>
+
+            {/* Right column: Animated Meta Ads Dashboard */}
+            <FadeInSection delay={200}>
+              <MetaAdsDashboard />
+            </FadeInSection>
+          </div>
 
           {/* Social proof stats bar */}
-          <FadeInSection delay={300}>
+          <FadeInSection delay={400}>
             <div className="mt-16 md:mt-20 grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[
-                { value: '320+', label: 'Clients Delivered' },
-                { value: '93%', label: 'Show Rate' },
-                { value: '\u00a32.4M+', label: 'Revenue Generated' },
-                { value: '4.9\u2605', label: 'Client Satisfaction' },
-              ].map((stat, i) => (
-                <div
-                  key={i}
-                  className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-5 text-center"
-                >
-                  <p className="text-2xl md:text-3xl font-bold font-heading text-ns-heading mb-1">
-                    {stat.value}
-                  </p>
-                  <p className="text-ns-body text-sm">{stat.label}</p>
+              {/* Stat 1: 320+ Clients Delivered */}
+              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-5 text-center">
+                <AnimatedCounter end={320} suffix="+" />
+                <p className="text-ns-body text-sm mt-1 nav-label" style={{ fontSize: '11px' }}>Clients Delivered</p>
+              </div>
+              {/* Stat 2: 93% Average Show Rate */}
+              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-5 text-center">
+                <AnimatedCounter end={93} suffix="%" />
+                <p className="text-ns-body text-sm mt-1 nav-label" style={{ fontSize: '11px' }}>Average Show Rate</p>
+              </div>
+              {/* Stat 3: 23% Average Close Rate */}
+              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-5 text-center">
+                <AnimatedCounter end={23} suffix="%" />
+                <p className="text-ns-body text-sm mt-1 nav-label" style={{ fontSize: '11px' }}>Average Close Rate</p>
+              </div>
+              {/* Stat 4: 5 Gold Stars — Client Rating */}
+              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-5 text-center">
+                <div className="flex justify-center gap-1 mb-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={24} fill="#C9A84C" color="#C9A84C" />
+                  ))}
                 </div>
-              ))}
+                <p className="text-ns-body text-sm mt-1 nav-label" style={{ fontSize: '11px' }}>Client Rating</p>
+              </div>
             </div>
           </FadeInSection>
         </div>
@@ -297,12 +481,20 @@ function HomePage({ onNavigate }) {
         <p className="text-center text-ns-body text-sm md:text-base mb-8 tracking-wide uppercase">
           Trusted by financial advisors across the UK
         </p>
-        <div className="logo-scroll">
-          <div className="logo-scroll-track flex gap-8 items-center">
+        <div
+          className="marquee-container"
+          style={{
+            overflow: 'hidden',
+            maskImage: 'linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%)',
+          }}
+        >
+          <div className="marquee-track" style={{ display: 'flex', gap: '32px', alignItems: 'center', width: 'max-content' }}>
             {[...publications, ...publications].map((name, i) => (
               <div
                 key={i}
-                className="flex-shrink-0 bg-white/5 border border-white/10 rounded-lg px-6 py-3 min-w-[160px] text-center"
+                className="bg-white/5 border border-white/10 rounded-lg px-6 py-3 min-w-[160px] text-center"
+                style={{ flexShrink: 0 }}
               >
                 <span className="text-ns-body text-sm font-medium">{name}</span>
               </div>
@@ -377,7 +569,7 @@ function HomePage({ onNavigate }) {
       </Section>
 
       {/* ═══════════════════════════════════════════════════════════════
-          4. HOW IT WORKS
+          4. HOW IT WORKS — Interactive Tabbed Box
       ═══════════════════════════════════════════════════════════════ */}
       <Section id="how-it-works" className="bg-ns-card/30">
         <SectionHeading
@@ -385,41 +577,166 @@ function HomePage({ onNavigate }) {
           subtitle="Our proven four-step process takes you from an empty pipeline to a consistently full calendar."
         />
 
-        <div className="relative">
-          {/* Horizontal connector line (desktop) */}
-          <div className="hidden md:block absolute top-16 left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-ns-accent/20 via-ns-accent/60 to-ns-accent/20" />
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-6 relative">
-            {steps.map((step, i) => (
-              <FadeInSection key={i} delay={i * 150}>
-                <div className="relative flex flex-col items-center text-center">
-                  {/* Vertical connector (mobile) */}
-                  {i < steps.length - 1 && (
-                    <div className="md:hidden absolute top-32 left-1/2 -translate-x-1/2 w-0.5 h-8 bg-ns-accent/30" />
-                  )}
-
-                  {/* Numbered circle */}
-                  <div className="relative z-10 w-32 h-32 rounded-full bg-ns-bg border-2 border-ns-accent/40 flex flex-col items-center justify-center mb-6">
-                    <span className="text-ns-accent text-xs font-bold tracking-widest uppercase mb-1">
-                      Step
-                    </span>
-                    <span className="text-3xl font-bold font-heading text-ns-heading">
-                      {step.number}
-                    </span>
-                    <div className="text-ns-accent mt-1">{step.icon}</div>
+        <FadeInSection>
+          <div>
+            {/* Step tabs row */}
+            <div className="grid grid-cols-2 md:grid-cols-4" style={{ gap: 0 }}>
+              {steps.map((step, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActiveStep(i)}
+                  style={{
+                    background: activeStep === i ? '#161B22' : '#0E1116',
+                    borderRadius: i === 0
+                      ? '14px 0 0 0'
+                      : i === steps.length - 1
+                      ? '0 14px 0 0'
+                      : '0',
+                    borderTop: activeStep === i ? '3px solid #5B7C99' : '1px solid rgba(91, 124, 153, 0.2)',
+                    borderLeft: '1px solid rgba(91, 124, 153, 0.2)',
+                    borderRight: '1px solid rgba(91, 124, 153, 0.2)',
+                    borderBottom: activeStep === i ? 'none' : '1px solid rgba(91, 124, 153, 0.2)',
+                    padding: '20px 16px',
+                    cursor: 'pointer',
+                    textAlign: 'center',
+                    transition: 'all 0.3s ease',
+                  }}
+                  className="flex flex-col items-center gap-2"
+                >
+                  <div style={{ color: activeStep === i ? '#5B7C99' : '#5B7C99', opacity: activeStep === i ? 1 : 0.5 }}>
+                    {step.icon}
                   </div>
-
-                  <h3 className="text-xl font-bold font-heading mb-3 text-ns-heading">
+                  <span
+                    style={{
+                      fontFamily: "'IBM Plex Sans', sans-serif",
+                      fontWeight: 500,
+                      fontSize: '10px',
+                      textTransform: 'uppercase',
+                      letterSpacing: '2px',
+                      color: activeStep === i ? '#C9A84C' : '#A1A8B3',
+                    }}
+                  >
+                    Step {step.number}
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: "'Playfair Display', serif",
+                      fontWeight: 600,
+                      fontSize: '14px',
+                      color: activeStep === i ? '#F2F4F8' : '#A1A8B3',
+                    }}
+                  >
                     {step.title}
-                  </h3>
-                  <p className="text-ns-body text-sm leading-relaxed max-w-xs mx-auto">
-                    {step.description}
-                  </p>
+                  </span>
+                </button>
+              ))}
+            </div>
+
+            {/* Detail panel */}
+            <div
+              style={{
+                background: '#161B22',
+                border: '1px solid #5B7C99',
+                borderTop: '3px solid #5B7C99',
+                borderRadius: '0 0 16px 16px',
+                padding: '32px',
+              }}
+            >
+              <div key={activeStep} className="hiw-detail-fade">
+                {/* Step label */}
+                <div className="flex items-center gap-3 mb-6">
+                  <div style={{ color: '#5B7C99' }}>{steps[activeStep].icon}</div>
+                  <span
+                    style={{
+                      fontFamily: "'IBM Plex Sans', sans-serif",
+                      fontWeight: 500,
+                      fontSize: '11px',
+                      textTransform: 'uppercase',
+                      letterSpacing: '2px',
+                      color: '#C9A84C',
+                    }}
+                  >
+                    Step {steps[activeStep].number}
+                  </span>
                 </div>
-              </FadeInSection>
-            ))}
+
+                <h3
+                  style={{
+                    fontFamily: "'Playfair Display', serif",
+                    fontWeight: 700,
+                    fontSize: '28px',
+                    color: '#F2F4F8',
+                    marginBottom: '24px',
+                  }}
+                >
+                  {steps[activeStep].title}
+                </h3>
+
+                {/* Two-column content */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <p
+                    style={{
+                      fontFamily: "'IBM Plex Sans', sans-serif",
+                      fontWeight: 300,
+                      fontSize: '16px',
+                      color: '#A1A8B3',
+                      lineHeight: 1.8,
+                    }}
+                  >
+                    {steps[activeStep].description}
+                  </p>
+                  <div>
+                    <h4
+                      style={{
+                        fontFamily: "'IBM Plex Sans', sans-serif",
+                        fontWeight: 500,
+                        fontSize: '12px',
+                        textTransform: 'uppercase',
+                        letterSpacing: '2px',
+                        color: '#F2F4F8',
+                        marginBottom: '16px',
+                      }}
+                    >
+                      What's Included
+                    </h4>
+                    <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                      {steps[activeStep].includes.map((item, idx) => (
+                        <li key={idx} className="flex items-start gap-3">
+                          <CheckCircle size={16} style={{ color: '#5B7C99', flexShrink: 0, marginTop: '2px' }} />
+                          <span style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 400, fontSize: '14px', color: '#A1A8B3' }}>
+                            {item}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Progress bar */}
+                <div className="flex gap-2 mt-8">
+                  {steps.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setActiveStep(i)}
+                      style={{
+                        flex: 1,
+                        height: '4px',
+                        borderRadius: '2px',
+                        background: i <= activeStep
+                          ? 'linear-gradient(90deg, #5B7C99, #C9A84C)'
+                          : '#0E1116',
+                        border: 'none',
+                        cursor: 'pointer',
+                        padding: 0,
+                        transition: 'background 0.3s ease',
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        </FadeInSection>
       </Section>
 
       {/* ═══════════════════════════════════════════════════════════════
@@ -433,28 +750,34 @@ function HomePage({ onNavigate }) {
 
         {/* Large stat cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {[
-            { end: 320, suffix: '+', label: 'New Clients Delivered', prefix: '' },
-            { end: 93, suffix: '%', label: 'Average Show Rate', prefix: '' },
-            { end: 47, suffix: '', label: 'Average Cost Per Lead', prefix: '\u00a3' },
-            { end: 90, suffix: '', label: 'Day Guarantee', prefix: '' },
-          ].map((stat, i) => (
-            <FadeInSection key={i} delay={i * 100}>
-              <div className="glass-card p-8 text-center">
-                <AnimatedCounter
-                  end={stat.end}
-                  prefix={stat.prefix}
-                  suffix={stat.suffix}
-                />
-                <p className="text-ns-body text-sm mt-2">{stat.label}</p>
-                {i === 3 && (
-                  <p className="text-ns-accent text-xs mt-1 font-semibold">
-                    10&ndash;20 Clients Guaranteed
-                  </p>
-                )}
+          <FadeInSection delay={0}>
+            <div className="glass-card p-8 text-center">
+              <AnimatedCounter end={320} suffix="+" />
+              <p className="text-ns-body text-sm mt-2">Clients Delivered</p>
+            </div>
+          </FadeInSection>
+          <FadeInSection delay={100}>
+            <div className="glass-card p-8 text-center">
+              <AnimatedCounter end={93} suffix="%" />
+              <p className="text-ns-body text-sm mt-2">Average Show Rate</p>
+            </div>
+          </FadeInSection>
+          <FadeInSection delay={200}>
+            <div className="glass-card p-8 text-center">
+              <AnimatedCounter end={23} suffix="%" />
+              <p className="text-ns-body text-sm mt-2">Average Close Rate</p>
+            </div>
+          </FadeInSection>
+          <FadeInSection delay={300}>
+            <div className="glass-card p-8 text-center">
+              <div className="flex justify-center gap-1 mb-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={28} fill="#C9A84C" color="#C9A84C" />
+                ))}
               </div>
-            </FadeInSection>
-          ))}
+              <p className="text-ns-body text-sm mt-2">Client Rating</p>
+            </div>
+          </FadeInSection>
         </div>
 
         {/* Mini case study cards */}
