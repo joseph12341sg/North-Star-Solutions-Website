@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ImagePlaceholder, FadeInSection, Section, SectionHeading, CTASection } from '../components/shared';
+import { ImagePlaceholder, FadeInSection, Section, SectionHeading } from '../components/shared';
 import {
   Mail, Phone, MapPin, Clock, Calendar, ChevronDown, Send, CheckCircle
 } from 'lucide-react';

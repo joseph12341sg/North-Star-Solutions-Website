@@ -10,17 +10,12 @@ import {
 } from '../components/shared';
 import {
   ArrowLeft,
-  ArrowRight,
-  Calendar,
   CheckCircle,
   Clock,
   MapPin,
   Briefcase,
   Users,
   Target,
-  TrendingUp,
-  PoundSterling,
-  BarChart3,
   Zap,
   MessageSquare,
   Shield,
