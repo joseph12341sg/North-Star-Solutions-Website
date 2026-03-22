@@ -165,6 +165,45 @@ export function ImagePlaceholder({ description, className = '', circle = false, 
   );
 }
 
+// ─── Smart Image (with gradient fallback) ────────────────────────────
+export function SmartImage({ src, alt, className = '', style = {} }) {
+  const [failed, setFailed] = useState(false);
+
+  if (failed) {
+    // Generate a deterministic gradient from the alt text
+    const hash = (alt || '').split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+    const hue1 = hash % 360;
+    const hue2 = (hash * 7 + 40) % 360;
+    return (
+      <div
+        className={className}
+        style={{
+          ...style,
+          background: `linear-gradient(135deg, hsl(${hue1}, 25%, 18%), hsl(${hue2}, 20%, 12%))`,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <div style={{ textAlign: 'center', padding: '1rem', opacity: 0.5 }}>
+          <Camera size={28} color="#5B7C99" strokeWidth={1.5} style={{ margin: '0 auto 8px' }} />
+          <div style={{ fontSize: '11px', color: '#5B7C99', maxWidth: '140px', margin: '0 auto' }}>{alt}</div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className={className}
+      style={style}
+      onError={() => setFailed(true)}
+    />
+  );
+}
+
 // ─── Animated Counter ────────────────────────────────────────────────
 export function AnimatedCounter({ end, prefix = '', suffix = '', duration = 2000, decimals = 0 }) {
   const [count, setCount] = useState(0);

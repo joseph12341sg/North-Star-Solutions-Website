@@ -1,5 +1,5 @@
 import React from 'react';
-import { FadeInSection, Section, SectionHeading, CTASection } from '../components/shared';
+import { FadeInSection, Section, SectionHeading, CTASection, SmartImage } from '../components/shared';
 import {
   Users, Pencil, Phone, Mail, BarChart3, Shield,
   Heart, Target, Coffee, Lightbulb, UserCheck
@@ -140,7 +140,7 @@ function TeamPage({ onNavigate }) {
           {leaders.map((leader, index) => (
             <FadeInSection key={leader.name} delay={index * 150}>
               <div className="glass-card p-6 md:p-8 rounded-2xl h-full hover:border-ns-accent/30 transition-all duration-300 text-center">
-                <img
+                <SmartImage
                   src={leader.image}
                   alt={leader.name}
                   className="w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto mb-6 object-cover"

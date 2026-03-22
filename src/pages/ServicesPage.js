@@ -19,7 +19,6 @@ const services = [
       'Detailed monthly reporting',
       'Average CPL of £47 across all clients',
     ],
-    image: '/images/05-meta-ad-mockup.jpg',
   },
   {
     icon: Target,
@@ -32,7 +31,6 @@ const services = [
       'CRM integration so nothing falls through the cracks',
       'GDPR-compliant data handling',
     ],
-    image: '/images/06-landing-page-mockup.jpg',
   },
   {
     icon: Phone,
@@ -46,7 +44,6 @@ const services = [
       'Booked directly into your calendar',
       'Average 93% show rate',
     ],
-    image: '/images/02-empty-calendar.jpg',
   },
   {
     icon: Mail,
@@ -59,7 +56,6 @@ const services = [
       'Calendar reminders and confirmation',
       '93% average show rate across all clients',
     ],
-    image: '/images/07-email-sequence-mockup.jpg',
   },
   {
     icon: BarChart3,
@@ -72,7 +68,6 @@ const services = [
       'Full transparency on ad spend and results',
       'ROI tracking per campaign',
     ],
-    image: '/images/08-analytics-dashboard.jpg',
   },
   {
     icon: Shield,
@@ -85,7 +80,6 @@ const services = [
       'Financial promotions guidance',
       'Peace of mind for regulated professionals',
     ],
-    image: '/images/09-compliance-shield.jpg',
   },
 ];
 
@@ -162,36 +156,25 @@ const thisIsntFor = [
 // ─── Service Card Component ──────────────────────────────────────────
 function ServiceCard({ service, index }) {
   const Icon = service.icon;
-  const isEven = index % 2 === 0;
 
   return (
     <FadeInSection delay={index * 100}>
       <div className="glass-card p-6 md:p-8 lg:p-10">
-        <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 items-center ${!isEven ? 'lg:direction-rtl' : ''}`}>
-          {/* Content side */}
-          <div className={!isEven ? 'lg:order-2' : ''}>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-lg bg-ns-accent/10 border border-ns-accent/20 flex items-center justify-center">
-                <Icon size={24} className="text-ns-accent" />
-              </div>
-              <h3 className="text-xl md:text-2xl font-bold font-heading">{service.title}</h3>
-            </div>
-            <p className="text-ns-body mb-6">{service.description}</p>
-            <ul className="space-y-3">
-              {service.bullets.map((bullet, i) => (
-                <li key={i} className="flex items-start gap-3">
-                  <CheckCircle size={18} className="text-ns-accent mt-0.5 flex-shrink-0" />
-                  <span className="text-ns-body text-sm md:text-base">{bullet}</span>
-                </li>
-              ))}
-            </ul>
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-12 h-12 rounded-lg bg-ns-accent/10 border border-ns-accent/20 flex items-center justify-center">
+            <Icon size={24} className="text-ns-accent" />
           </div>
-
-          {/* Image side */}
-          <div className={!isEven ? 'lg:order-1' : ''}>
-            <img src={service.image} alt={service.title} className="w-full rounded-lg h-64 md:h-72 object-cover" />
-          </div>
+          <h3 className="text-xl md:text-2xl font-bold font-heading">{service.title}</h3>
         </div>
+        <p className="text-ns-body mb-6">{service.description}</p>
+        <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {service.bullets.map((bullet, i) => (
+            <li key={i} className="flex items-start gap-3">
+              <CheckCircle size={18} className="text-ns-accent mt-0.5 flex-shrink-0" />
+              <span className="text-ns-body text-sm md:text-base">{bullet}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </FadeInSection>
   );

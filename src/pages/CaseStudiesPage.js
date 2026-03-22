@@ -1,5 +1,5 @@
 import React from 'react';
-import { AnimatedCounter, FadeInSection, Section, SectionHeading, CTASection } from '../components/shared';
+import { AnimatedCounter, FadeInSection, Section, SectionHeading, CTASection, SmartImage } from '../components/shared';
 import { ArrowRight, MapPin, Briefcase } from 'lucide-react';
 
 const caseStudies = [
@@ -106,7 +106,7 @@ function CaseStudiesPage({ onNavigate }) {
           {caseStudies.map((study, index) => (
             <FadeInSection key={study.id} delay={index * 100}>
               <div className="glass-card rounded-2xl overflow-hidden hover:border-ns-accent/30 transition-all duration-300 h-full flex flex-col">
-                <img
+                <SmartImage
                   src={study.image}
                   alt={study.company}
                   className="w-full h-48 md:h-56 object-cover"
