@@ -250,13 +250,6 @@ function CaseStudy2({ onNavigate }) {
             </div>
           </FadeInSection>
 
-          <FadeInSection delay={200}>
-            <img
-              src="/images/16-nurture-sequence.jpg"
-              alt="Dual-funnel campaign architecture"
-              className="w-full rounded-2xl h-80 md:h-[500px] object-cover"
-            />
-          </FadeInSection>
         </div>
       </Section>
 
@@ -402,15 +395,6 @@ function CaseStudy2({ onNavigate }) {
           </div>
         </FadeInSection>
 
-        <FadeInSection delay={200}>
-          <div className="mt-12 flex justify-center">
-            <img
-              src="/images/17-analytics-overview.jpg"
-              alt="Growth chart showing advisor headcount and revenue"
-              className="w-full max-w-3xl rounded-2xl h-48 md:h-64 object-cover"
-            />
-          </div>
-        </FadeInSection>
       </Section>
 
       {/* ═══════════════════════════════════════════════════════════════

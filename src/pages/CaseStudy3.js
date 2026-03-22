@@ -254,13 +254,6 @@ function CaseStudy3({ onNavigate }) {
             </div>
           </FadeInSection>
 
-          <FadeInSection delay={200}>
-            <img
-              src="/images/20-modern-office.jpg"
-              alt="Campaign operations centre"
-              className="w-full rounded-2xl h-80 md:h-[500px] object-cover"
-            />
-          </FadeInSection>
         </div>
       </Section>
 
@@ -406,15 +399,6 @@ function CaseStudy3({ onNavigate }) {
           </div>
         </FadeInSection>
 
-        <FadeInSection delay={200}>
-          <div className="mt-12 flex justify-center">
-            <img
-              src="/images/17-analytics-overview.jpg"
-              alt="Results dashboard showing leads, appointments, and pipeline"
-              className="w-full max-w-3xl rounded-2xl h-48 md:h-64 object-cover"
-            />
-          </div>
-        </FadeInSection>
       </Section>
 
       {/* ═══════════════════════════════════════════════════════════════
