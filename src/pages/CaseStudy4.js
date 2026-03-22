@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  ImagePlaceholder,
   AnimatedCounter,
   FadeInSection,
   Section,
@@ -265,10 +264,10 @@ function CaseStudy4({ onNavigate }) {
           </FadeInSection>
 
           <FadeInSection delay={200}>
-            <ImagePlaceholder
-              description="Premium, compliance-first campaign architecture — elegant design"
-              className="w-full rounded-2xl"
-              height="h-80 md:h-[560px]"
+            <img
+              src="/images/18-compliance-shield.jpg"
+              alt="Compliance-first campaign architecture"
+              className="w-full rounded-2xl h-80 md:h-[560px] object-cover"
             />
           </FadeInSection>
         </div>
@@ -418,10 +417,10 @@ function CaseStudy4({ onNavigate }) {
 
         <FadeInSection delay={200}>
           <div className="mt-12 flex justify-center">
-            <ImagePlaceholder
-              description="Elegant results presentation — premium feel with compliance badge"
-              className="w-full max-w-3xl rounded-2xl"
-              height="h-48 md:h-64"
+            <img
+              src="/images/17-analytics-overview.jpg"
+              alt="Results presentation dashboard"
+              className="w-full max-w-3xl rounded-2xl h-48 md:h-64 object-cover"
             />
           </div>
         </FadeInSection>
@@ -448,11 +447,10 @@ function CaseStudy4({ onNavigate }) {
               </blockquote>
 
               <div className="flex flex-col items-center gap-4">
-                <ImagePlaceholder
-                  description="Eleanor Pemberton circular headshot"
-                  circle
-                  height="h-20"
-                  className="w-20"
+                <img
+                  src="/images/testimonials/eleanor-pemberton.jpg"
+                  alt="Eleanor Pemberton"
+                  className="w-20 h-20 rounded-full object-cover"
                 />
                 <div>
                   <p className="font-bold font-heading text-ns-heading text-lg">Eleanor Pemberton</p>
