@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImagePlaceholder, AnimatedCounter, FadeInSection, Section, SectionHeading, CTASection } from '../components/shared';
+import { AnimatedCounter, FadeInSection, Section, SectionHeading, CTASection } from '../components/shared';
 import { Target, Eye, Shield, Handshake, Users, Award, TrendingUp, Clock, Globe, Compass } from 'lucide-react';
 
 function AboutPage({ onNavigate }) {
@@ -87,22 +87,15 @@ function AboutPage({ onNavigate }) {
               </p>
             </div>
           </FadeInSection>
-          <FadeInSection delay={200}>
-            <ImagePlaceholder
-              description="Team photo — professional, modern UK office environment"
-              className="w-full rounded-2xl"
-              height="h-64 md:h-96"
-            />
-          </FadeInSection>
         </div>
       </section>
 
       {/* ─── Our Story ─────────────────────────────────────────────────── */}
       <Section id="our-story">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="max-w-4xl mx-auto">
           <FadeInSection>
             <div>
-              <SectionHeading title="Our Story" centered={false} />
+              <SectionHeading title="Our Story" />
               <div className="space-y-5 text-ns-body leading-relaxed">
                 <p>
                   North Star Solutions was founded by someone who saw a glaring disconnect: financial advisors who were
@@ -130,13 +123,6 @@ function AboutPage({ onNavigate }) {
                 </p>
               </div>
             </div>
-          </FadeInSection>
-          <FadeInSection delay={200}>
-            <ImagePlaceholder
-              description="Founder photo or candid team working shot"
-              className="w-full rounded-2xl"
-              height="h-72 md:h-96"
-            />
           </FadeInSection>
         </div>
       </Section>
