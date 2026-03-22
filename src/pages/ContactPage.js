@@ -301,16 +301,6 @@ function ContactPage({ onNavigate }) {
         </div>
       </Section>
 
-      {/* ─── Map / Location Placeholder ────────────────────────────────── */}
-      <Section id="location">
-        <FadeInSection>
-          <img
-            src="/images/15-uk-map.jpg"
-            alt="UK coverage map"
-            className="w-full rounded-2xl h-48 md:h-64 object-cover"
-          />
-        </FadeInSection>
-      </Section>
     </div>
   );
 }
