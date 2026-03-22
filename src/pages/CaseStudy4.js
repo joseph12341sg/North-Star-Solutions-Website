@@ -263,13 +263,6 @@ function CaseStudy4({ onNavigate }) {
             </div>
           </FadeInSection>
 
-          <FadeInSection delay={200}>
-            <img
-              src="/images/18-compliance-shield.jpg"
-              alt="Compliance-first campaign architecture"
-              className="w-full rounded-2xl h-80 md:h-[560px] object-cover"
-            />
-          </FadeInSection>
         </div>
       </Section>
 
@@ -415,15 +408,6 @@ function CaseStudy4({ onNavigate }) {
           </div>
         </FadeInSection>
 
-        <FadeInSection delay={200}>
-          <div className="mt-12 flex justify-center">
-            <img
-              src="/images/17-analytics-overview.jpg"
-              alt="Results presentation dashboard"
-              className="w-full max-w-3xl rounded-2xl h-48 md:h-64 object-cover"
-            />
-          </div>
-        </FadeInSection>
       </Section>
 
       {/* ═══════════════════════════════════════════════════════════════
