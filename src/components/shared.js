@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Camera, Compass, Star, Phone, Mail, MapPin, Linkedin, Facebook, Instagram, Twitter, Menu, X, ArrowUp } from 'lucide-react';
 
 // ─── Logo Image ─────────────────────────────────────────────────────
-const LOGO_SRC = process.env.PUBLIC_URL + '/images/North Star Solutions trans (7).png';
+const LOGO_SRC = process.env.PUBLIC_URL + '/images/logo.svg';
 
 export function LogoImage({ height = 36, className = '', rotate = false }) {
   const [imgError, setImgError] = useState(false);
