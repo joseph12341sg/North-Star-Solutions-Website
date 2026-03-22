@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImagePlaceholder, AnimatedCounter, FadeInSection, Section, SectionHeading, CTASection } from '../components/shared';
+import { AnimatedCounter, FadeInSection, Section, SectionHeading, CTASection } from '../components/shared';
 import { ArrowRight, MapPin, Briefcase } from 'lucide-react';
 
 const caseStudies = [
@@ -12,7 +12,7 @@ const caseStudies = [
     summary: "From referral-only to a predictable client acquisition system that transformed James's practice.",
     stat: '14',
     statLabel: 'New Clients',
-    image: 'Professional headshot of James Hartley — male, 40s, suit, friendly expression',
+    image: '/images/10-hartley-office.jpg',
   },
   {
     id: 'case-study-2',
@@ -23,7 +23,7 @@ const caseStudies = [
     summary: 'How solving the pipeline problem allowed Sarah and David to scale from 2 to 6 advisors.',
     stat: '22',
     statLabel: 'New Clients',
-    image: 'Sarah and David Chen — husband-wife advisory team, modern office setting',
+    image: '/images/11-meridian-office.jpg',
   },
   {
     id: 'case-study-3',
@@ -34,7 +34,7 @@ const caseStudies = [
     summary: 'After losing 60% of referral sources overnight, Tom built something better.',
     stat: '19',
     statLabel: 'New Clients',
-    image: 'Tom Greenwood — male, 30s, casual-professional, approachable',
+    image: '/images/12-greenwood-office.jpg',
   },
   {
     id: 'case-study-4',
@@ -45,7 +45,7 @@ const caseStudies = [
     summary: 'How Eleanor overcame compliance fears to build a marketing system that actually works.',
     stat: '17',
     statLabel: 'New Clients',
-    image: 'Eleanor Pemberton — female, 50s, authoritative, elegant office backdrop',
+    image: '/images/13-pemberton-office.jpg',
   },
 ];
 
@@ -106,10 +106,10 @@ function CaseStudiesPage({ onNavigate }) {
           {caseStudies.map((study, index) => (
             <FadeInSection key={study.id} delay={index * 100}>
               <div className="glass-card rounded-2xl overflow-hidden hover:border-ns-accent/30 transition-all duration-300 h-full flex flex-col">
-                <ImagePlaceholder
-                  description={study.image}
-                  className="w-full"
-                  height="h-48 md:h-56"
+                <img
+                  src={study.image}
+                  alt={study.company}
+                  className="w-full h-48 md:h-56 object-cover"
                 />
                 <div className="p-6 md:p-8 flex flex-col flex-1">
                   {/* Meta info */}

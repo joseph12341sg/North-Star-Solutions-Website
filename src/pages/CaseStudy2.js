@@ -110,10 +110,10 @@ function CaseStudy2({ onNavigate }) {
             </FadeInSection>
 
             <FadeInSection delay={200}>
-              <ImagePlaceholder
-                description="Sarah and David Chen — husband-wife team, modern office"
-                className="w-full rounded-2xl"
-                height="h-72 md:h-96"
+              <img
+                src="/images/11-meridian-office.jpg"
+                alt="Meridian Financial Planning office"
+                className="w-full rounded-2xl h-72 md:h-96 object-cover"
               />
             </FadeInSection>
           </div>

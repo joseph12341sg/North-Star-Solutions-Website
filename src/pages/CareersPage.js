@@ -171,6 +171,15 @@ function CareersPage({ onNavigate }) {
           ))}
         </div>
 
+        <FadeInSection delay={400}>
+          <div className="mt-12">
+            <img
+              src="/images/14-remote-office.jpg"
+              alt="Remote working environment"
+              className="w-full rounded-2xl h-56 md:h-80 object-cover"
+            />
+          </div>
+        </FadeInSection>
       </Section>
 
       {/* ─── Our Benefits ──────────────────────────────────────────────── */}

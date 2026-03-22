@@ -111,10 +111,10 @@ function CaseStudy4({ onNavigate }) {
             </FadeInSection>
 
             <FadeInSection delay={200}>
-              <ImagePlaceholder
-                description="Eleanor Pemberton — female, 50s, authoritative, elegant office"
-                className="w-full rounded-2xl"
-                height="h-72 md:h-96"
+              <img
+                src="/images/13-pemberton-office.jpg"
+                alt="Pemberton & Associates office"
+                className="w-full rounded-2xl h-72 md:h-96 object-cover"
               />
             </FadeInSection>
           </div>

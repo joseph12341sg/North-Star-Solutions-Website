@@ -111,10 +111,10 @@ function CaseStudy1({ onNavigate }) {
             </FadeInSection>
 
             <FadeInSection delay={200}>
-              <ImagePlaceholder
-                description="Professional headshot of James Hartley — male, 40s, suit, friendly"
-                className="w-full rounded-2xl"
-                height="h-72 md:h-96"
+              <img
+                src="/images/10-hartley-office.jpg"
+                alt="Hartley Wealth Management office"
+                className="w-full rounded-2xl h-72 md:h-96 object-cover"
               />
             </FadeInSection>
           </div>

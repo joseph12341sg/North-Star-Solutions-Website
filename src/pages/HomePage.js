@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
-  ImagePlaceholder,
   AnimatedCounter,
   FadeInSection,
   Section,
@@ -217,16 +216,19 @@ function HomePage({ onNavigate }) {
       firm: 'Hartley Wealth Management',
       result: '14 New Clients in 87 Days',
       page: 'case-study-1',
+      image: '/images/10-hartley-office.jpg',
     },
     {
       firm: 'Meridian Financial Planning',
       result: '22 New Clients in 90 Days',
       page: 'case-study-2',
+      image: '/images/11-meridian-office.jpg',
     },
     {
       firm: 'Greenwood Mortgages',
       result: '19 New Clients in 90 Days',
       page: 'case-study-3',
+      image: '/images/12-greenwood-office.jpg',
     },
   ];
 
@@ -539,10 +541,10 @@ function HomePage({ onNavigate }) {
                   </div>
                 </div>
               </div>
-              <ImagePlaceholder
-                description={`Illustration — ${painPoints[activeTab].label}`}
-                height="h-64 md:h-80"
-                className="rounded-xl"
+              <img
+                src="/images/02-empty-calendar.jpg"
+                alt="Empty calendar — the problem we solve"
+                className="rounded-xl w-full h-64 md:h-80 object-cover"
               />
             </div>
           </div>
@@ -557,6 +559,15 @@ function HomePage({ onNavigate }) {
           title="From Zero to a Full Diary in 90 Days"
           subtitle="Our proven four-step process takes you from an empty pipeline to a consistently full calendar."
         />
+
+        <FadeInSection>
+          <img
+            src="/images/03-process-diagram.jpg"
+            alt="Our four-step process"
+            className="w-full rounded-2xl mb-12 object-cover"
+            style={{ maxHeight: '400px' }}
+          />
+        </FadeInSection>
 
         <FadeInSection>
           <div>
@@ -723,7 +734,16 @@ function HomePage({ onNavigate }) {
       {/* ═══════════════════════════════════════════════════════════════
           5. RESULTS / STATS SECTION
       ═══════════════════════════════════════════════════════════════ */}
-      <Section>
+      <Section className="relative overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/images/04-data-viz-bg.jpg"
+            alt=""
+            className="w-full h-full object-cover opacity-20"
+          />
+          <div className="absolute inset-0 bg-ns-bg/80" />
+        </div>
+        <div className="relative z-10">
         <SectionHeading
           title="Real Results. Real Advisors. No Fluff."
           subtitle="Every number below is backed by real campaign data from real financial advisor clients."
@@ -769,10 +789,10 @@ function HomePage({ onNavigate }) {
                 onClick={() => onNavigate(cs.page)}
                 className="glass-card p-6 text-left w-full group hover:border-ns-accent/50 transition-all"
               >
-                <ImagePlaceholder
-                  description={`${cs.firm} case study preview`}
-                  height="h-40"
-                  className="rounded-lg mb-4 w-full"
+                <img
+                  src={cs.image}
+                  alt={`${cs.firm} case study`}
+                  className="rounded-lg mb-4 w-full h-40 object-cover"
                 />
                 <p className="text-ns-accent text-sm font-semibold mb-1">{cs.firm}</p>
                 <p className="text-xl font-bold font-heading text-ns-heading mb-3">
@@ -784,6 +804,7 @@ function HomePage({ onNavigate }) {
               </button>
             </FadeInSection>
           ))}
+        </div>
         </div>
       </Section>
 

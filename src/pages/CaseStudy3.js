@@ -108,10 +108,10 @@ function CaseStudy3({ onNavigate }) {
             </FadeInSection>
 
             <FadeInSection delay={200}>
-              <ImagePlaceholder
-                description="Tom Greenwood — male, 30s, casual-professional"
-                className="w-full rounded-2xl"
-                height="h-72 md:h-96"
+              <img
+                src="/images/12-greenwood-office.jpg"
+                alt="Greenwood Mortgages office"
+                className="w-full rounded-2xl h-72 md:h-96 object-cover"
               />
             </FadeInSection>
           </div>
