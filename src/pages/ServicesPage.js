@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImagePlaceholder, FadeInSection, Section, SectionHeading, CTASection } from '../components/shared';
+import { FadeInSection, Section, SectionHeading, CTASection } from '../components/shared';
 import {
   Megaphone, Target, Phone, Mail, BarChart3, Shield,
   CheckCircle, X as XIcon, ArrowRight, Calendar, Clock,
@@ -19,7 +19,7 @@ const services = [
       'Detailed monthly reporting',
       'Average CPL of £47 across all clients',
     ],
-    image: 'Screenshot mockup of a Meta ad for a financial advisor — dark phone frame',
+    image: '/images/05-meta-ad-mockup.jpg',
   },
   {
     icon: Target,
@@ -32,7 +32,7 @@ const services = [
       'CRM integration so nothing falls through the cracks',
       'GDPR-compliant data handling',
     ],
-    image: 'Landing page mockup on laptop screen',
+    image: '/images/06-landing-page-mockup.jpg',
   },
   {
     icon: Phone,
@@ -46,7 +46,7 @@ const services = [
       'Booked directly into your calendar',
       'Average 93% show rate',
     ],
-    image: 'Appointment setter on phone, professional headset',
+    image: '/images/02-empty-calendar.jpg',
   },
   {
     icon: Mail,
@@ -59,7 +59,7 @@ const services = [
       'Calendar reminders and confirmation',
       '93% average show rate across all clients',
     ],
-    image: 'Email/SMS sequence mockup — dark UI',
+    image: '/images/07-email-sequence-mockup.jpg',
   },
   {
     icon: BarChart3,
@@ -72,7 +72,7 @@ const services = [
       'Full transparency on ad spend and results',
       'ROI tracking per campaign',
     ],
-    image: 'Dashboard screenshot mockup with charts and KPIs',
+    image: '/images/08-analytics-dashboard.jpg',
   },
   {
     icon: Shield,
@@ -85,7 +85,7 @@ const services = [
       'Financial promotions guidance',
       'Peace of mind for regulated professionals',
     ],
-    image: 'Shield/compliance icon illustration',
+    image: '/images/09-compliance-shield.jpg',
   },
 ];
 
@@ -189,7 +189,7 @@ function ServiceCard({ service, index }) {
 
           {/* Image side */}
           <div className={!isEven ? 'lg:order-1' : ''}>
-            <ImagePlaceholder description={service.image} height="h-64 md:h-72" className="w-full rounded-lg" />
+            <img src={service.image} alt={service.title} className="w-full rounded-lg h-64 md:h-72 object-cover" />
           </div>
         </div>
       </div>

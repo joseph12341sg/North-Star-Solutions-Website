@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImagePlaceholder, FadeInSection, Section, SectionHeading } from '../components/shared';
+import { FadeInSection, Section, SectionHeading } from '../components/shared';
 import {
   TrendingUp, Globe, Target, Heart, Briefcase, MapPin,
   PoundSterling, Gift, Monitor, Users, BookOpen, Coffee, Mail, ArrowRight
@@ -173,10 +173,10 @@ function CareersPage({ onNavigate }) {
 
         <FadeInSection delay={400}>
           <div className="mt-12">
-            <ImagePlaceholder
-              description="Team working environment photo"
-              className="w-full rounded-2xl"
-              height="h-56 md:h-80"
+            <img
+              src="/images/14-remote-office.jpg"
+              alt="Remote working environment"
+              className="w-full rounded-2xl h-56 md:h-80 object-cover"
             />
           </div>
         </FadeInSection>

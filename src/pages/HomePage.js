@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
-  ImagePlaceholder,
   AnimatedCounter,
   FadeInSection,
   Section,
@@ -186,24 +185,28 @@ function HomePage({ onNavigate }) {
         "Before North Star, I was getting maybe one or two referrals a month if I was lucky. Now I've got 14 new clients in under 90 days. The quality is outstanding \u2014 these are people actively looking for advice, not tyre-kickers. It's completely transformed my practice.",
       name: 'James Hartley',
       role: 'Director \u2014 Hartley Wealth Management, Manchester',
+      image: '/images/testimonials/james-hartley.jpg',
     },
     {
       quote:
         "We'd wasted nearly \u00a315,000 on a digital marketing agency that delivered nothing but vanity metrics. North Star was different from day one \u2014 real leads, real appointments, real clients. 22 new clients in 90 days speaks for itself.",
       name: 'Sarah Chen',
       role: 'Co-founder \u2014 Meridian Financial Planning, Leeds',
+      image: '/images/testimonials/sarah-chen.jpg',
     },
     {
       quote:
         "The appointment setting alone is worth the investment. Every lead is contacted in under a minute, qualified properly, and booked straight into my calendar. I just turn up and do what I do best. Brilliant service.",
       name: 'Tom Greenwood',
       role: 'Managing Director \u2014 Greenwood Mortgages, Birmingham',
+      image: '/images/testimonials/tom-greenwood.jpg',
     },
     {
       quote:
         "I was terrified about compliance. North Star understood FCA rules better than agencies ten times their size. Every ad, every landing page \u2014 all compliant. And the results? 17 new clients and counting. I wish I'd found them sooner.",
       name: 'Eleanor Pemberton',
       role: 'Principal \u2014 Pemberton & Associates, Bristol',
+      image: '/images/testimonials/eleanor-pemberton.jpg',
     },
   ];
 
@@ -213,16 +216,19 @@ function HomePage({ onNavigate }) {
       firm: 'Hartley Wealth Management',
       result: '14 New Clients in 87 Days',
       page: 'case-study-1',
+      image: '/images/10-hartley-office.jpg',
     },
     {
       firm: 'Meridian Financial Planning',
       result: '22 New Clients in 90 Days',
       page: 'case-study-2',
+      image: '/images/11-meridian-office.jpg',
     },
     {
       firm: 'Greenwood Mortgages',
       result: '19 New Clients in 90 Days',
       page: 'case-study-3',
+      image: '/images/12-greenwood-office.jpg',
     },
   ];
 
@@ -378,14 +384,6 @@ function HomePage({ onNavigate }) {
           1. HERO SECTION
       ═══════════════════════════════════════════════════════════════ */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
-        {/* Background image */}
-        <div className="absolute inset-0 z-0">
-          <ImagePlaceholder
-            description="Hero background — financial advisor in modern office"
-            className="w-full h-full object-cover"
-            height="h-full"
-          />
-        </div>
         {/* Gradient overlays */}
         <div className="absolute inset-0 z-10 bg-gradient-to-r from-ns-bg via-ns-bg/90 to-ns-bg/60" />
         <div className="absolute inset-0 z-10 bg-gradient-to-t from-ns-bg via-transparent to-ns-bg/30" />
@@ -543,10 +541,10 @@ function HomePage({ onNavigate }) {
                   </div>
                 </div>
               </div>
-              <ImagePlaceholder
-                description={`Illustration — ${painPoints[activeTab].label}`}
-                height="h-64 md:h-80"
-                className="rounded-xl"
+              <img
+                src="/images/02-empty-calendar.jpg"
+                alt="Empty calendar — the problem we solve"
+                className="rounded-xl w-full h-64 md:h-80 object-cover"
               />
             </div>
           </div>
@@ -561,6 +559,15 @@ function HomePage({ onNavigate }) {
           title="From Zero to a Full Diary in 90 Days"
           subtitle="Our proven four-step process takes you from an empty pipeline to a consistently full calendar."
         />
+
+        <FadeInSection>
+          <img
+            src="/images/03-process-diagram.jpg"
+            alt="Our four-step process"
+            className="w-full rounded-2xl mb-12 object-cover"
+            style={{ maxHeight: '400px' }}
+          />
+        </FadeInSection>
 
         <FadeInSection>
           <div>
@@ -727,7 +734,16 @@ function HomePage({ onNavigate }) {
       {/* ═══════════════════════════════════════════════════════════════
           5. RESULTS / STATS SECTION
       ═══════════════════════════════════════════════════════════════ */}
-      <Section>
+      <Section className="relative overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/images/04-data-viz-bg.jpg"
+            alt=""
+            className="w-full h-full object-cover opacity-20"
+          />
+          <div className="absolute inset-0 bg-ns-bg/80" />
+        </div>
+        <div className="relative z-10">
         <SectionHeading
           title="Real Results. Real Advisors. No Fluff."
           subtitle="Every number below is backed by real campaign data from real financial advisor clients."
@@ -773,10 +789,10 @@ function HomePage({ onNavigate }) {
                 onClick={() => onNavigate(cs.page)}
                 className="glass-card p-6 text-left w-full group hover:border-ns-accent/50 transition-all"
               >
-                <ImagePlaceholder
-                  description={`${cs.firm} case study preview`}
-                  height="h-40"
-                  className="rounded-lg mb-4 w-full"
+                <img
+                  src={cs.image}
+                  alt={`${cs.firm} case study`}
+                  className="rounded-lg mb-4 w-full h-40 object-cover"
                 />
                 <p className="text-ns-accent text-sm font-semibold mb-1">{cs.firm}</p>
                 <p className="text-xl font-bold font-heading text-ns-heading mb-3">
@@ -788,6 +804,7 @@ function HomePage({ onNavigate }) {
               </button>
             </FadeInSection>
           ))}
+        </div>
         </div>
       </Section>
 
@@ -833,11 +850,10 @@ function HomePage({ onNavigate }) {
                   &ldquo;{t.quote}&rdquo;
                 </blockquote>
                 <div className="flex items-center gap-4">
-                  <ImagePlaceholder
-                    description={`${t.name} headshot`}
-                    circle
-                    height="h-14"
-                    className="w-14"
+                  <img
+                    src={t.image}
+                    alt={t.name}
+                    className="w-14 h-14 rounded-full object-cover"
                   />
                   <div>
                     <p className="font-bold font-heading text-ns-heading">{t.name}</p>

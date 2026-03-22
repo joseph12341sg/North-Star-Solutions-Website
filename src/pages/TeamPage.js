@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImagePlaceholder, FadeInSection, Section, SectionHeading, CTASection } from '../components/shared';
+import { FadeInSection, Section, SectionHeading, CTASection } from '../components/shared';
 import {
   Users, Pencil, Phone, Mail, BarChart3, Shield,
   Heart, Target, Coffee, Lightbulb, UserCheck
@@ -9,19 +9,22 @@ import {
 
 const leaders = [
   {
-    name: 'Daniel Morrison',
+    name: 'Joseph Akinlabi',
     role: 'Founder & Managing Director',
-    bio: "Daniel founded North Star Solutions after spending a decade in financial services marketing. Having worked with some of the UK's largest advice firms, he saw first-hand how independent advisors were being left behind in the digital marketing revolution. His mission: level the playing field. Daniel oversees strategy and client relationships, ensuring every advisor gets the attention and results they deserve.",
+    image: '/images/team/joseph.jpg',
+    bio: "Joseph founded North Star Solutions with a clear vision: to give independent financial advisors the same calibre of client acquisition that the largest firms take for granted. He oversees company strategy, partnerships, and growth — ensuring every advisor who works with North Star gets a system that actually delivers. His hands-on leadership style means he's involved in every major client relationship from day one.",
   },
   {
-    name: 'Rachel Thornton',
-    role: 'Head of Campaign Operations',
-    bio: 'Rachel brings 8 years of performance marketing experience to North Star, having previously managed seven-figure ad budgets for B2B SaaS companies. She pivoted to financial services after recognising the massive opportunity for data-driven client acquisition in the FA market. Rachel leads our media buying team and is obsessed with driving down cost per lead whilst maintaining lead quality.',
+    name: 'Kyle Read',
+    role: 'GTM Operator',
+    image: '/images/team/kyle.jpg',
+    bio: "Kyle drives North Star's go-to-market engine — from campaign strategy and media buying to funnel optimisation and scaling. He's the one making sure every pound of ad spend is working as hard as possible, constantly testing new angles, audiences, and creative to push down cost per lead and drive up quality. If it touches performance marketing, Kyle's across it.",
   },
   {
-    name: 'Marcus Webb',
+    name: 'Eva Van De Kam',
     role: 'Head of Client Success',
-    bio: "Marcus is the voice our clients hear most often. With a background in financial planning himself — he held his Level 4 Diploma before moving into marketing — Marcus understands the advisor's world like few marketers can. He manages the onboarding process, monthly strategy calls, and ensures every client hits their growth targets.",
+    image: '/images/team/eva.jpg',
+    bio: "Eva is the voice our clients hear most often and the person who ensures every advisor hits their growth targets. She manages onboarding, monthly strategy calls, and the day-to-day relationship with each client. Eva's focus is simple: make sure every advisor feels supported, informed, and confident that their investment is delivering real results.",
   },
 ];
 
@@ -137,10 +140,10 @@ function TeamPage({ onNavigate }) {
           {leaders.map((leader, index) => (
             <FadeInSection key={leader.name} delay={index * 150}>
               <div className="glass-card p-6 md:p-8 rounded-2xl h-full hover:border-ns-accent/30 transition-all duration-300 text-center">
-                <ImagePlaceholder
-                  description={`Professional headshot of ${leader.name}`}
-                  className="w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto mb-6"
-                  height="h-32 md:h-40"
+                <img
+                  src={leader.image}
+                  alt={leader.name}
+                  className="w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto mb-6 object-cover"
                 />
                 <h3 className="text-xl font-heading font-bold text-ns-heading mb-1">
                   {leader.name}
@@ -214,13 +217,6 @@ function TeamPage({ onNavigate }) {
           })}
         </div>
 
-        <FadeInSection delay={400}>
-          <ImagePlaceholder
-            description="Team candid photo — meeting room, whiteboard, collaborative feel"
-            className="w-full rounded-2xl"
-            height="h-64 md:h-96"
-          />
-        </FadeInSection>
       </Section>
 
       {/* ─── CTA ───────────────────────────────────────────────────────── */}

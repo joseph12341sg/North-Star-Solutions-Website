@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  ImagePlaceholder,
   AnimatedCounter,
   FadeInSection,
   Section,
@@ -110,10 +109,10 @@ function CaseStudy2({ onNavigate }) {
             </FadeInSection>
 
             <FadeInSection delay={200}>
-              <ImagePlaceholder
-                description="Sarah and David Chen — husband-wife team, modern office"
-                className="w-full rounded-2xl"
-                height="h-72 md:h-96"
+              <img
+                src="/images/11-meridian-office.jpg"
+                alt="Meridian Financial Planning office"
+                className="w-full rounded-2xl h-72 md:h-96 object-cover"
               />
             </FadeInSection>
           </div>
@@ -252,10 +251,10 @@ function CaseStudy2({ onNavigate }) {
           </FadeInSection>
 
           <FadeInSection delay={200}>
-            <ImagePlaceholder
-              description="Dual-funnel campaign architecture diagram"
-              className="w-full rounded-2xl"
-              height="h-80 md:h-[500px]"
+            <img
+              src="/images/16-nurture-sequence.jpg"
+              alt="Dual-funnel campaign architecture"
+              className="w-full rounded-2xl h-80 md:h-[500px] object-cover"
             />
           </FadeInSection>
         </div>
@@ -405,10 +404,10 @@ function CaseStudy2({ onNavigate }) {
 
         <FadeInSection delay={200}>
           <div className="mt-12 flex justify-center">
-            <ImagePlaceholder
-              description="Growth chart — advisor headcount and revenue over time"
-              className="w-full max-w-3xl rounded-2xl"
-              height="h-48 md:h-64"
+            <img
+              src="/images/17-analytics-overview.jpg"
+              alt="Growth chart showing advisor headcount and revenue"
+              className="w-full max-w-3xl rounded-2xl h-48 md:h-64 object-cover"
             />
           </div>
         </FadeInSection>
@@ -434,11 +433,10 @@ function CaseStudy2({ onNavigate }) {
               </blockquote>
 
               <div className="flex flex-col items-center gap-4">
-                <ImagePlaceholder
-                  description="Sarah Chen circular headshot"
-                  circle
-                  height="h-20"
-                  className="w-20"
+                <img
+                  src="/images/testimonials/sarah-chen.jpg"
+                  alt="Sarah Chen"
+                  className="w-20 h-20 rounded-full object-cover"
                 />
                 <div>
                   <p className="font-bold font-heading text-ns-heading text-lg">Sarah Chen</p>

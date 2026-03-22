@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ImagePlaceholder, FadeInSection, Section, SectionHeading } from '../components/shared';
+import { FadeInSection, Section, SectionHeading } from '../components/shared';
 import {
   Mail, Phone, MapPin, Clock, Calendar, ChevronDown, Send, CheckCircle
 } from 'lucide-react';
@@ -304,10 +304,10 @@ function ContactPage({ onNavigate }) {
       {/* ─── Map / Location Placeholder ────────────────────────────────── */}
       <Section id="location">
         <FadeInSection>
-          <ImagePlaceholder
-            description="UK map graphic or office location visual"
-            className="w-full rounded-2xl"
-            height="h-48 md:h-64"
+          <img
+            src="/images/15-uk-map.jpg"
+            alt="UK coverage map"
+            className="w-full rounded-2xl h-48 md:h-64 object-cover"
           />
         </FadeInSection>
       </Section>
