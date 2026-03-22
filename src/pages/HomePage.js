@@ -186,24 +186,28 @@ function HomePage({ onNavigate }) {
         "Before North Star, I was getting maybe one or two referrals a month if I was lucky. Now I've got 14 new clients in under 90 days. The quality is outstanding \u2014 these are people actively looking for advice, not tyre-kickers. It's completely transformed my practice.",
       name: 'James Hartley',
       role: 'Director \u2014 Hartley Wealth Management, Manchester',
+      image: '/images/testimonials/james-hartley.jpg',
     },
     {
       quote:
         "We'd wasted nearly \u00a315,000 on a digital marketing agency that delivered nothing but vanity metrics. North Star was different from day one \u2014 real leads, real appointments, real clients. 22 new clients in 90 days speaks for itself.",
       name: 'Sarah Chen',
       role: 'Co-founder \u2014 Meridian Financial Planning, Leeds',
+      image: '/images/testimonials/sarah-chen.jpg',
     },
     {
       quote:
         "The appointment setting alone is worth the investment. Every lead is contacted in under a minute, qualified properly, and booked straight into my calendar. I just turn up and do what I do best. Brilliant service.",
       name: 'Tom Greenwood',
       role: 'Managing Director \u2014 Greenwood Mortgages, Birmingham',
+      image: '/images/testimonials/tom-greenwood.jpg',
     },
     {
       quote:
         "I was terrified about compliance. North Star understood FCA rules better than agencies ten times their size. Every ad, every landing page \u2014 all compliant. And the results? 17 new clients and counting. I wish I'd found them sooner.",
       name: 'Eleanor Pemberton',
       role: 'Principal \u2014 Pemberton & Associates, Bristol',
+      image: '/images/testimonials/eleanor-pemberton.jpg',
     },
   ];
 
@@ -825,11 +829,10 @@ function HomePage({ onNavigate }) {
                   &ldquo;{t.quote}&rdquo;
                 </blockquote>
                 <div className="flex items-center gap-4">
-                  <ImagePlaceholder
-                    description={`${t.name} headshot`}
-                    circle
-                    height="h-14"
-                    className="w-14"
+                  <img
+                    src={t.image}
+                    alt={t.name}
+                    className="w-14 h-14 rounded-full object-cover"
                   />
                   <div>
                     <p className="font-bold font-heading text-ns-heading">{t.name}</p>
