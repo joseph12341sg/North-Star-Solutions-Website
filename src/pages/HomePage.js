@@ -378,14 +378,6 @@ function HomePage({ onNavigate }) {
           1. HERO SECTION
       ═══════════════════════════════════════════════════════════════ */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
-        {/* Background image */}
-        <div className="absolute inset-0 z-0">
-          <ImagePlaceholder
-            description="Hero background — financial advisor in modern office"
-            className="w-full h-full object-cover"
-            height="h-full"
-          />
-        </div>
         {/* Gradient overlays */}
         <div className="absolute inset-0 z-10 bg-gradient-to-r from-ns-bg via-ns-bg/90 to-ns-bg/60" />
         <div className="absolute inset-0 z-10 bg-gradient-to-t from-ns-bg via-transparent to-ns-bg/30" />
